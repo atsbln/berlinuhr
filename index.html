@@ -3,246 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Berlin-Uhr – einfache Testfassung</title>
+  <title>Ton-Test</title>
 
-  <!-- Version 19 -->
+  <!-- Version 20 -->
 
 </head>
-<body style="margin:0;padding:20px;background:#eeeeee;font-family:Arial,Helvetica,sans-serif;">
+<body style="margin:0;padding:30px;background:#eeeeee;font-family:Arial,Helvetica,sans-serif;text-align:center;">
 
-<div style="height:40px;"></div>
-
-<div id="buhr" style="width:300px;margin:0 auto;background:#eeeeee;padding:10px;">
-
-  <div style="width:150px;margin:0 auto;">
-    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-      <tr>
-        <td align="center"><div id="wd_0" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:5px;"></div></td>
-        <td align="center"><div id="wd_1" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:5px;"></div></td>
-        <td align="center"><div id="wd_2" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:5px;"></div></td>
-        <td align="center"><div id="wd_3" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:5px;"></div></td>
-        <td align="center"><div id="wd_4" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:5px;"></div></td>
-        <td align="center"><div id="wd_5" style="width:8px;height:8px;background:#bbbbbb;border:3px solid #222222;border-radius:5px;"></div></td>
-        <td align="center"><div id="wd_6" style="width:8px;height:8px;background:#bbbbbb;border:3px solid #222222;border-radius:5px;"></div></td>
-      </tr>
-    </table>
+  <div style="margin-top:40px;">
+    <button id="testButton" style="font-size:20px;padding:12px 24px;">Ton testen</button>
   </div>
 
-  <div style="height:10px;"></div>
-
-  <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-    <tr>
-      <td id="h5_0" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:6px;"></td>
-      <td id="h5_1" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:6px;"></td>
-      <td id="h5_2" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:6px;"></td>
-      <td id="h5_3" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-    </tr>
-  </table>
-
-  <div style="height:10px;"></div>
-
-  <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-    <tr>
-      <td id="h1_0" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:6px;"></td>
-      <td id="h1_1" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:6px;"></td>
-      <td id="h1_2" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:6px;"></td>
-      <td id="h1_3" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-    </tr>
-  </table>
-
-  <div style="height:10px;"></div>
-
-  <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-    <tr>
-      <td id="m5_0" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:4px;"></td>
-      <td id="m5_1" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:4px;"></td>
-      <td id="m5_2" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:4px;"></td>
-      <td id="m5_3" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:4px;"></td>
-      <td id="m5_4" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:4px;"></td>
-      <td id="m5_5" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:4px;"></td>
-      <td id="m5_6" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:4px;"></td>
-      <td id="m5_7" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:4px;"></td>
-      <td id="m5_8" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:4px;"></td>
-      <td id="m5_9" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:4px;"></td>
-      <td id="m5_10" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-    </tr>
-  </table>
-
-  <div style="height:10px;"></div>
-
-  <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-    <tr>
-      <td id="m1_0" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:6px;"></td>
-      <td id="m1_1" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:6px;"></td>
-      <td id="m1_2" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      <td style="width:6px;"></td>
-      <td id="m1_3" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-    </tr>
-  </table>
-
-  <div style="height:10px;"></div>
-
-  <div style="width:150px;margin:0 auto;">
-    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-      <tr>
-        <td id="s5_0" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:3px;"></td>
-        <td id="s5_1" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:3px;"></td>
-        <td id="s5_2" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:3px;"></td>
-        <td id="s5_3" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:3px;"></td>
-        <td id="s5_4" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:3px;"></td>
-        <td id="s5_5" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:3px;"></td>
-        <td id="s5_6" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:3px;"></td>
-        <td id="s5_7" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:3px;"></td>
-        <td id="s5_8" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:3px;"></td>
-        <td id="s5_9" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:3px;"></td>
-        <td id="s5_10" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-      </tr>
-    </table>
-
-    <div style="height:4px;"></div>
-
-    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-      <tr>
-        <td id="s1_0" style="height:10px;background:#cfcfcf;border:2px solid #888888;"></td>
-        <td style="width:6px;"></td>
-        <td id="s1_1" style="height:10px;background:#cfcfcf;border:2px solid #888888;"></td>
-        <td style="width:6px;"></td>
-        <td id="s1_2" style="height:10px;background:#cfcfcf;border:2px solid #888888;"></td>
-        <td style="width:6px;"></td>
-        <td id="s1_3" style="height:10px;background:#cfcfcf;border:2px solid #888888;"></td>
-      </tr>
-    </table>
+  <div style="margin-top:20px;font-size:16px;color:#444444;">
+    Einmal antippen. Wenn ein kurzer Ton hörbar ist, eignet sich das Gerät wahrscheinlich auch für die Uhr.
   </div>
-</div>
 
-<script type="text/javascript">
-function buhrSet(id, color) {
-  var e = document.getElementById(id);
-  if (e) {
-    e.style.background = color;
-  }
-}
+  <audio id="beepAudio" preload="auto">
+    <source src="beep.mp3" type="audio/mpeg">
+  </audio>
 
-function buhrReset(prefix, count) {
-  var i;
-  for (i = 0; i < count; i = i + 1) {
-    buhrSet(prefix + i, "#bbbbbb");
-  }
-}
+  <script type="text/javascript">
+    var btn = document.getElementById("testButton");
+    var audio = document.getElementById("beepAudio");
 
-function buhrResetWeekday() {
-  var i;
-  for (i = 0; i < 7; i = i + 1) {
-    buhrSet("wd_" + i, "#bbbbbb");
-  }
-}
-
-function buhrResetSecondOnes() {
-  var i;
-  for (i = 0; i < 4; i = i + 1) {
-    buhrSet("s1_" + i, "#cfcfcf");
-  }
-}
-
-function buhrUpdate() {
-  var d = new Date();
-  var h = d.getHours();
-  var m = d.getMinutes();
-  var s = d.getSeconds();
-  var wd = d.getDay();
-
-  var h5 = Math.floor(h / 5);
-  var h1 = h % 5;
-  var m5 = Math.floor(m / 5);
-  var m1 = m % 5;
-  var s5 = Math.floor(s / 5);
-  var s1 = s % 5;
-
-  var wdIndex;
-  var i;
-
-  if (wd == 0) {
-    wdIndex = 6;
-  } else {
-    wdIndex = wd - 1;
-  }
-
-  buhrResetWeekday();
-  buhrReset("h5_", 4);
-  buhrReset("h1_", 4);
-  buhrReset("m5_", 11);
-  buhrReset("m1_", 4);
-  buhrReset("s5_", 11);
-  buhrResetSecondOnes();
-
-  for (i = 0; i <= wdIndex; i = i + 1) {
-    buhrSet("wd_" + i, "#5a82cc");
-  }
-
-  for (i = 0; i < h5; i = i + 1) {
-    buhrSet("h5_" + i, "#2f8f2f");
-  }
-
-  for (i = 0; i < h1; i = i + 1) {
-    buhrSet("h1_" + i, "#2f8f2f");
-  }
-
-  for (i = 0; i < m5; i = i + 1) {
-    if (i == 2 || i == 5 || i == 8) {
-      buhrSet("m5_" + i, "#b83a3a");
-    } else {
-      buhrSet("m5_" + i, "#d4bf2a");
-    }
-  }
-
-  for (i = 0; i < m1; i = i + 1) {
-    buhrSet("m1_" + i, "#d4bf2a");
-  }
-
-  for (i = 0; i < s5; i = i + 1) {
-    if (i == 2 || i == 5 || i == 8) {
-      buhrSet("s5_" + i, "#cc5555");
-    } else {
-      buhrSet("s5_" + i, "#5a82cc");
-    }
-  }
-
-  for (i = 0; i < s1; i = i + 1) {
-    buhrSet("s1_" + i, "#8ea7d8");
-  }
-}
-
-buhrUpdate();
-setInterval(buhrUpdate, 1000);
-</script>
+    btn.onclick = function () {
+      try {
+        audio.currentTime = 0;
+      } catch (e) {
+      }
+      audio.play();
+    };
+  </script>
 
 </body>
 </html>
