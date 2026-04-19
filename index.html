@@ -1,3 +1,14 @@
+Gern — hier ist die **vollständige HTML-Datei als Version 10** mit dem neuen **Sekundenteil** unten:
+
+* Abstand zum Minutenblock: **genau wie zwischen den anderen Zeilen**
+* Sekundenblock: **zentriert und schmaler**
+* obere Sekundenzeile: **11 Felder**
+* untere Sekundenzeile: **4 Felder**
+* Grundfarbe Sekunden: **Blau**
+* Markierungen 3 / 6 / 9 in der 11er-Sekundenzeile: **Rot**
+* sonst bleibt die schlichte, alte-iPad-taugliche Machart erhalten
+
+```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -5,11 +16,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Berlin-Uhr – einfache Testfassung</title>
 
-  <!-- Version 9 -->
+  <!-- Version 10 -->
 
 </head>
 <body style="margin:0;padding:20px;background:#eeeeee;font-family:Arial,Helvetica,sans-serif;">
-<br><br><br><br>
+
 <div id="buhr" style="width:300px;margin:0 auto;background:#eeeeee;padding:10px;">
   <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
     <tr>
@@ -78,6 +89,50 @@
       <td id="m1_3" style="height:28px;background:#bbbbbb;border:2px solid #666666;"></td>
     </tr>
   </table>
+
+  <div style="height:10px;"></div>
+
+  <div style="width:150px;margin:0 auto;">
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+      <tr>
+        <td id="s5_0" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:3px;"></td>
+        <td id="s5_1" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:3px;"></td>
+        <td id="s5_2" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:3px;"></td>
+        <td id="s5_3" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:3px;"></td>
+        <td id="s5_4" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:3px;"></td>
+        <td id="s5_5" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:3px;"></td>
+        <td id="s5_6" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:3px;"></td>
+        <td id="s5_7" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:3px;"></td>
+        <td id="s5_8" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:3px;"></td>
+        <td id="s5_9" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:3px;"></td>
+        <td id="s5_10" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+      </tr>
+    </table>
+
+    <div style="height:10px;"></div>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+      <tr>
+        <td id="s1_0" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:6px;"></td>
+        <td id="s1_1" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:6px;"></td>
+        <td id="s1_2" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+        <td style="width:6px;"></td>
+        <td id="s1_3" style="height:16px;background:#bbbbbb;border:2px solid #666666;"></td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 <script type="text/javascript">
@@ -99,16 +154,23 @@ function buhrUpdate() {
   var d = new Date();
   var h = d.getHours();
   var m = d.getMinutes();
+  var s = d.getSeconds();
+
   var h5 = Math.floor(h / 5);
   var h1 = h % 5;
   var m5 = Math.floor(m / 5);
   var m1 = m % 5;
+  var s5 = Math.floor(s / 5);
+  var s1 = s % 5;
+
   var i;
 
   buhrReset("h5_", 4);
   buhrReset("h1_", 4);
   buhrReset("m5_", 11);
   buhrReset("m1_", 4);
+  buhrReset("s5_", 11);
+  buhrReset("s1_", 4);
 
   for (i = 0; i < h5; i = i + 1) {
     buhrSet("h5_" + i, "#55aa55");
@@ -128,6 +190,18 @@ function buhrUpdate() {
 
   for (i = 0; i < m1; i = i + 1) {
     buhrSet("m1_" + i, "#dddd66");
+  }
+
+  for (i = 0; i < s5; i = i + 1) {
+    if (i == 2 || i == 5 || i == 8) {
+      buhrSet("s5_" + i, "#cc5555");
+    } else {
+      buhrSet("s5_" + i, "#5a82cc");
+    }
+  }
+
+  for (i = 0; i < s1; i = i + 1) {
+    buhrSet("s1_" + i, "#5a82cc");
   }
 }
 
