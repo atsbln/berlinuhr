@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Berlin-Uhr – einfache Testfassung</title>
 
-  <!-- Version 11 -->
+  <!-- Version 14 -->
 
 </head>
 <body style="margin:0;padding:20px;background:#eeeeee;font-family:Arial,Helvetica,sans-serif;">
@@ -13,6 +13,23 @@
 <div style="height:40px;"></div>
 
 <div id="buhr" style="width:300px;margin:0 auto;background:#eeeeee;padding:10px;">
+
+  <div style="width:150px;margin:0 auto;">
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+      <tr>
+        <td align="center"><div id="wd_0" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #666666;border-radius:5px;"></div></td>
+        <td align="center"><div id="wd_1" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #666666;border-radius:5px;"></div></td>
+        <td align="center"><div id="wd_2" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #666666;border-radius:5px;"></div></td>
+        <td align="center"><div id="wd_3" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #666666;border-radius:5px;"></div></td>
+        <td align="center"><div id="wd_4" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #666666;border-radius:5px;"></div></td>
+        <td align="center"><div id="wd_5" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #666666;border-radius:5px;"></div></td>
+        <td align="center"><div id="wd_6" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #666666;border-radius:5px;"></div></td>
+      </tr>
+    </table>
+  </div>
+
+  <div style="height:10px;"></div>
+
   <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
     <tr>
       <td id="h5_0" style="height:28px;background:#bbbbbb;border:2px solid #666666;"></td>
@@ -146,6 +163,7 @@ function buhrUpdate() {
   var h = d.getHours();
   var m = d.getMinutes();
   var s = d.getSeconds();
+  var wd = d.getDay();
 
   var h5 = Math.floor(h / 5);
   var h1 = h % 5;
@@ -154,14 +172,30 @@ function buhrUpdate() {
   var s5 = Math.floor(s / 5);
   var s1 = s % 5;
 
+  var wdIndex;
   var i;
 
+  if (wd == 0) {
+    wdIndex = 6;
+  } else {
+    wdIndex = wd - 1;
+  }
+
+  buhrReset("wd_", 7);
   buhrReset("h5_", 4);
   buhrReset("h1_", 4);
   buhrReset("m5_", 11);
   buhrReset("m1_", 4);
   buhrReset("s5_", 11);
   buhrReset("s1_", 4);
+
+  for (i = 0; i <= wdIndex; i = i + 1) {
+    if (i == 3) {
+      buhrSet("wd_" + i, "#cc5555");
+    } else {
+      buhrSet("wd_" + i, "#5a82cc");
+    }
+  }
 
   for (i = 0; i < h5; i = i + 1) {
     buhrSet("h5_" + i, "#55aa55");
