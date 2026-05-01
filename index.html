@@ -5,320 +5,381 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Berlin-Uhr – Uhr, Kalender und Analog</title>
 
-  <!-- Version 32 -->
+  <!-- Version 35 -->
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #eeeeee;
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #app {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      background: #eeeeee;
+      overflow: hidden;
+    }
+
+    .view {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    .stage {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform-origin: 0 0;
+      -webkit-transform-origin: 0 0;
+    }
+
+    #clockStage {
+      width: 300px;
+      height: 210px;
+    }
+
+    #calendarStage {
+      width: 300px;
+      height: 330px;
+    }
+
+    #analogStage {
+      width: 240px;
+      height: 240px;
+    }
+  </style>
 
 </head>
-<body style="margin:0;padding:20px;background:#eeeeee;font-family:Arial,Helvetica,sans-serif;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;">
+<body>
 
-<div style="height:40px;"></div>
+<div id="app">
 
-<div id="app" style="width:300px;margin:0 auto;background:#eeeeee;padding:10px;cursor:pointer;">
+  <div id="clockView" class="view">
+    <div id="clockStage" class="stage">
 
-  <div id="clockView">
+      <div style="width:150px;margin:0 auto;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <td align="center"><div id="wd_0" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
+            <td align="center"><div id="wd_1" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
+            <td align="center"><div id="wd_2" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
+            <td align="center"><div id="wd_3" style="width:10px;height:10px;background:#bbbbbb;border:3px solid #222222;border-radius:0;"></div></td>
+            <td align="center"><div id="wd_4" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
+            <td align="center"><div id="wd_5" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
+            <td align="center"><div id="wd_6" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
+          </tr>
+        </table>
+      </div>
 
-    <div style="width:150px;margin:0 auto;">
-      <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-        <tr>
-          <td align="center"><div id="wd_0" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
-          <td align="center"><div id="wd_1" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
-          <td align="center"><div id="wd_2" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
-          <td align="center"><div id="wd_3" style="width:10px;height:10px;background:#bbbbbb;border:3px solid #222222;border-radius:0;"></div></td>
-          <td align="center"><div id="wd_4" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
-          <td align="center"><div id="wd_5" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
-          <td align="center"><div id="wd_6" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
-        </tr>
-      </table>
-    </div>
-
-    <div style="height:10px;"></div>
-
-    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-      <tr>
-        <td id="h5_0" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:6px;"></td>
-        <td id="h5_1" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:6px;"></td>
-        <td id="h5_2" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:6px;"></td>
-        <td id="h5_3" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      </tr>
-    </table>
-
-    <div style="height:10px;"></div>
-
-    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-      <tr>
-        <td id="h1_0" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:6px;"></td>
-        <td id="h1_1" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:6px;"></td>
-        <td id="h1_2" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:6px;"></td>
-        <td id="h1_3" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      </tr>
-    </table>
-
-    <div style="height:10px;"></div>
-
-    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-      <tr>
-        <td id="m5_0" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:4px;"></td>
-        <td id="m5_1" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:4px;"></td>
-        <td id="m5_2" style="height:28px;background:#bbbbbb;border:3px solid #222222;"></td>
-        <td style="width:4px;"></td>
-        <td id="m5_3" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:4px;"></td>
-        <td id="m5_4" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:4px;"></td>
-        <td id="m5_5" style="height:28px;background:#bbbbbb;border:3px solid #222222;"></td>
-        <td style="width:4px;"></td>
-        <td id="m5_6" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:4px;"></td>
-        <td id="m5_7" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:4px;"></td>
-        <td id="m5_8" style="height:28px;background:#bbbbbb;border:3px solid #222222;"></td>
-        <td style="width:4px;"></td>
-        <td id="m5_9" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:4px;"></td>
-        <td id="m5_10" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      </tr>
-    </table>
-
-    <div style="height:10px;"></div>
-
-    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-      <tr>
-        <td id="m1_0" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:6px;"></td>
-        <td id="m1_1" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:6px;"></td>
-        <td id="m1_2" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-        <td style="width:6px;"></td>
-        <td id="m1_3" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
-      </tr>
-    </table>
-
-    <div style="height:10px;"></div>
-
-    <div style="width:150px;margin:0 auto;">
-      <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-        <tr>
-          <td id="s5_0" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-          <td style="width:3px;"></td>
-          <td id="s5_1" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-          <td style="width:3px;"></td>
-          <td id="s5_2" style="height:10px;background:#bbbbbb;border:3px solid #222222;"></td>
-          <td style="width:3px;"></td>
-          <td id="s5_3" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-          <td style="width:3px;"></td>
-          <td id="s5_4" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-          <td style="width:3px;"></td>
-          <td id="s5_5" style="height:10px;background:#bbbbbb;border:3px solid #222222;"></td>
-          <td style="width:3px;"></td>
-          <td id="s5_6" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-          <td style="width:3px;"></td>
-          <td id="s5_7" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-          <td style="width:3px;"></td>
-          <td id="s5_8" style="height:10px;background:#bbbbbb;border:3px solid #222222;"></td>
-          <td style="width:3px;"></td>
-          <td id="s5_9" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-          <td style="width:3px;"></td>
-          <td id="s5_10" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
-        </tr>
-      </table>
-
-      <div style="height:4px;"></div>
+      <div style="height:10px;"></div>
 
       <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
         <tr>
-          <td id="s1_0" style="height:10px;background:#cfcfcf;border:2px solid #888888;"></td>
+          <td id="h5_0" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
           <td style="width:6px;"></td>
-          <td id="s1_1" style="height:10px;background:#cfcfcf;border:2px solid #888888;"></td>
+          <td id="h5_1" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
           <td style="width:6px;"></td>
-          <td id="s1_2" style="height:10px;background:#cfcfcf;border:2px solid #888888;"></td>
+          <td id="h5_2" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
           <td style="width:6px;"></td>
-          <td id="s1_3" style="height:10px;background:#cfcfcf;border:2px solid #888888;"></td>
+          <td id="h5_3" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
         </tr>
       </table>
+
+      <div style="height:10px;"></div>
+
+      <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr>
+          <td id="h1_0" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:6px;"></td>
+          <td id="h1_1" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:6px;"></td>
+          <td id="h1_2" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:6px;"></td>
+          <td id="h1_3" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+        </tr>
+      </table>
+
+      <div style="height:10px;"></div>
+
+      <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr>
+          <td id="m5_0" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:4px;"></td>
+          <td id="m5_1" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:4px;"></td>
+          <td id="m5_2" style="height:28px;background:#bbbbbb;border:3px solid #222222;"></td>
+          <td style="width:4px;"></td>
+          <td id="m5_3" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:4px;"></td>
+          <td id="m5_4" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:4px;"></td>
+          <td id="m5_5" style="height:28px;background:#bbbbbb;border:3px solid #222222;"></td>
+          <td style="width:4px;"></td>
+          <td id="m5_6" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:4px;"></td>
+          <td id="m5_7" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:4px;"></td>
+          <td id="m5_8" style="height:28px;background:#bbbbbb;border:3px solid #222222;"></td>
+          <td style="width:4px;"></td>
+          <td id="m5_9" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:4px;"></td>
+          <td id="m5_10" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+        </tr>
+      </table>
+
+      <div style="height:10px;"></div>
+
+      <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr>
+          <td id="m1_0" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:6px;"></td>
+          <td id="m1_1" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:6px;"></td>
+          <td id="m1_2" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+          <td style="width:6px;"></td>
+          <td id="m1_3" style="height:28px;background:#bbbbbb;border:2px solid #222222;"></td>
+        </tr>
+      </table>
+
+      <div style="height:10px;"></div>
+
+      <div style="width:150px;margin:0 auto;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <td id="s5_0" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
+            <td style="width:3px;"></td>
+            <td id="s5_1" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
+            <td style="width:3px;"></td>
+            <td id="s5_2" style="height:10px;background:#bbbbbb;border:3px solid #222222;"></td>
+            <td style="width:3px;"></td>
+            <td id="s5_3" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
+            <td style="width:3px;"></td>
+            <td id="s5_4" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
+            <td style="width:3px;"></td>
+            <td id="s5_5" style="height:10px;background:#bbbbbb;border:3px solid #222222;"></td>
+            <td style="width:3px;"></td>
+            <td id="s5_6" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
+            <td style="width:3px;"></td>
+            <td id="s5_7" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
+            <td style="width:3px;"></td>
+            <td id="s5_8" style="height:10px;background:#bbbbbb;border:3px solid #222222;"></td>
+            <td style="width:3px;"></td>
+            <td id="s5_9" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
+            <td style="width:3px;"></td>
+            <td id="s5_10" style="height:10px;background:#bbbbbb;border:2px solid #222222;"></td>
+          </tr>
+        </table>
+
+        <div style="height:4px;"></div>
+
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <td id="s1_0" style="height:10px;background:#cfcfcf;border:2px solid #888888;"></td>
+            <td style="width:6px;"></td>
+            <td id="s1_1" style="height:10px;background:#cfcfcf;border:2px solid #888888;"></td>
+            <td style="width:6px;"></td>
+            <td id="s1_2" style="height:10px;background:#cfcfcf;border:2px solid #888888;"></td>
+            <td style="width:6px;"></td>
+            <td id="s1_3" style="height:10px;background:#cfcfcf;border:2px solid #888888;"></td>
+          </tr>
+        </table>
+      </div>
+
     </div>
   </div>
 
-  <div id="calendarView" style="display:none;">
+  <div id="calendarView" class="view">
+    <div id="calendarStage" class="stage">
 
-    <div style="width:150px;margin:0 auto;">
-      <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-        <tr>
-          <td align="center"><div id="cwd_0" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
-          <td align="center"><div id="cwd_1" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
-          <td align="center"><div id="cwd_2" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
-          <td align="center"><div id="cwd_3" style="width:10px;height:10px;background:#bbbbbb;border:3px solid #222222;border-radius:0;"></div></td>
-          <td align="center"><div id="cwd_4" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
-          <td align="center"><div id="cwd_5" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
-          <td align="center"><div id="cwd_6" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
-        </tr>
-      </table>
-    </div>
+      <div style="width:150px;margin:0 auto;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <td align="center"><div id="cwd_0" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
+            <td align="center"><div id="cwd_1" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
+            <td align="center"><div id="cwd_2" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
+            <td align="center"><div id="cwd_3" style="width:10px;height:10px;background:#bbbbbb;border:3px solid #222222;border-radius:0;"></div></td>
+            <td align="center"><div id="cwd_4" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
+            <td align="center"><div id="cwd_5" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
+            <td align="center"><div id="cwd_6" style="width:10px;height:10px;background:#bbbbbb;border:2px solid #222222;border-radius:0;"></div></td>
+          </tr>
+        </table>
+      </div>
 
-    <div style="height:12px;"></div>
+      <div style="height:12px;"></div>
 
-    <div style="width:220px;margin:0 auto;">
-      <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-        <tr>
-          <td><div id="day5_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="day5_1" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="day5_2" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="day5_3" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="day5_4" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="day5_5" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-        </tr>
-      </table>
+      <div style="width:220px;margin:0 auto;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <td><div id="day5_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="day5_1" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="day5_2" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="day5_3" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="day5_4" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="day5_5" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+          </tr>
+        </table>
+
+        <div style="height:8px;"></div>
+
+        <table cellpadding="0" cellspacing="0" border="0" style="width:160px;margin:0 auto;">
+          <tr>
+            <td><div id="day1_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="day1_1" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="day1_2" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="day1_3" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="height:22px;"></div>
+
+      <div style="width:120px;margin:0 auto;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <td><div id="mon5_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:8px;"></td>
+            <td><div id="mon5_1" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+          </tr>
+        </table>
+      </div>
 
       <div style="height:8px;"></div>
 
-      <table cellpadding="0" cellspacing="0" border="0" style="width:160px;margin:0 auto;">
-        <tr>
-          <td><div id="day1_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="day1_1" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="day1_2" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="day1_3" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-        </tr>
-      </table>
+      <div style="width:160px;margin:0 auto;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <td><div id="mon1_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="mon1_1" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="mon1_2" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="mon1_3" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="height:24px;"></div>
+
+      <div style="width:120px;margin:0 auto;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <td><div id="yr50_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:8px;"></td>
+            <td><div id="yr50_1" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div style="width:240px;margin:0 auto;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <td><div id="yr5_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:4px;"></td>
+            <td><div id="yr5_1" style="height:22px;background:#bbbbbb;border:3px solid #222222;"></div></td>
+            <td style="width:4px;"></td>
+            <td><div id="yr5_2" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:4px;"></td>
+            <td><div id="yr5_3" style="height:22px;background:#bbbbbb;border:3px solid #222222;"></div></td>
+            <td style="width:4px;"></td>
+            <td><div id="yr5_4" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:4px;"></td>
+            <td><div id="yr5_5" style="height:22px;background:#bbbbbb;border:3px solid #222222;"></div></td>
+            <td style="width:4px;"></td>
+            <td><div id="yr5_6" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:4px;"></td>
+            <td><div id="yr5_7" style="height:22px;background:#bbbbbb;border:3px solid #222222;"></div></td>
+            <td style="width:4px;"></td>
+            <td><div id="yr5_8" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div style="width:160px;margin:0 auto;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <td><div id="yr1_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="yr1_1" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="yr1_2" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+            <td style="width:6px;"></td>
+            <td><div id="yr1_3" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="height:14px;"></div>
+
+      <div style="text-align:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" fill="#f2d04c" stroke="#222222" stroke-width="1.5"></circle>
+          <line x1="7.5" y1="8.5" x2="10.2" y2="8.5" stroke="#222222" stroke-width="1.7" stroke-linecap="round"></line>
+          <circle cx="15.8" cy="8.7" r="1.2" fill="#222222"></circle>
+          <path d="M7.5 14.2 Q12 17.4 16.5 14.2" fill="none" stroke="#222222" stroke-width="1.5" stroke-linecap="round"></path>
+        </svg>
+      </div>
+
     </div>
-
-    <div style="height:22px;"></div>
-
-    <div style="width:120px;margin:0 auto;">
-      <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-        <tr>
-          <td><div id="mon5_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:8px;"></td>
-          <td><div id="mon5_1" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-        </tr>
-      </table>
-    </div>
-
-    <div style="height:8px;"></div>
-
-    <div style="width:160px;margin:0 auto;">
-      <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-        <tr>
-          <td><div id="mon1_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="mon1_1" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="mon1_2" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="mon1_3" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-        </tr>
-      </table>
-    </div>
-
-    <div style="height:24px;"></div>
-
-    <div style="width:120px;margin:0 auto;">
-      <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-        <tr>
-          <td><div id="yr50_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:8px;"></td>
-          <td><div id="yr50_1" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-        </tr>
-      </table>
-    </div>
-
-    <div style="height:8px;"></div>
-
-    <div style="width:240px;margin:0 auto;">
-      <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-        <tr>
-          <td><div id="yr5_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:4px;"></td>
-          <td><div id="yr5_1" style="height:22px;background:#bbbbbb;border:3px solid #222222;"></div></td>
-          <td style="width:4px;"></td>
-          <td><div id="yr5_2" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:4px;"></td>
-          <td><div id="yr5_3" style="height:22px;background:#bbbbbb;border:3px solid #222222;"></div></td>
-          <td style="width:4px;"></td>
-          <td><div id="yr5_4" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:4px;"></td>
-          <td><div id="yr5_5" style="height:22px;background:#bbbbbb;border:3px solid #222222;"></div></td>
-          <td style="width:4px;"></td>
-          <td><div id="yr5_6" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:4px;"></td>
-          <td><div id="yr5_7" style="height:22px;background:#bbbbbb;border:3px solid #222222;"></div></td>
-          <td style="width:4px;"></td>
-          <td><div id="yr5_8" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-        </tr>
-      </table>
-    </div>
-
-    <div style="height:8px;"></div>
-
-    <div style="width:160px;margin:0 auto;">
-      <table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-        <tr>
-          <td><div id="yr1_0" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="yr1_1" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="yr1_2" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-          <td style="width:6px;"></td>
-          <td><div id="yr1_3" style="height:22px;background:#bbbbbb;border:2px solid #222222;"></div></td>
-        </tr>
-      </table>
-    </div>
-
-    <div style="height:14px;"></div>
-
-    <div style="text-align:center;">
-      <svg width="24" height="24" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="9" fill="#f2d04c" stroke="#222222" stroke-width="1.5"></circle>
-        <line x1="7.5" y1="8.5" x2="10.2" y2="8.5" stroke="#222222" stroke-width="1.7" stroke-linecap="round"></line>
-        <circle cx="15.8" cy="8.7" r="1.2" fill="#222222"></circle>
-        <path d="M7.5 14.2 Q12 17.4 16.5 14.2" fill="none" stroke="#222222" stroke-width="1.5" stroke-linecap="round"></path>
-      </svg>
-    </div>
-
   </div>
 
-  <div id="analogView" style="display:none;">
+  <div id="analogView" class="view">
+    <div id="analogStage" class="stage">
 
-    <div style="width:240px;height:240px;margin:0 auto;position:relative;" id="analogFace">
+      <div style="width:240px;height:240px;position:relative;" id="analogFace">
 
-      <div id="analogOuter" style="position:absolute;left:10px;top:10px;width:220px;height:220px;border:4px solid #222222;border-radius:110px;background:#f6f6f1;"></div>
+        <div id="analogOuter" style="position:absolute;left:10px;top:10px;width:220px;height:220px;border:4px solid #222222;border-radius:110px;background:#f6f6f1;"></div>
 
-      <div id="tick1" style="position:absolute;left:159px;top:46px;width:4px;height:16px;background:#222222;z-index:4;"></div>
-      <div id="tick2" style="position:absolute;left:182px;top:69px;width:4px;height:16px;background:#222222;z-index:4;"></div>
-      <div id="tick4" style="position:absolute;left:182px;top:155px;width:4px;height:16px;background:#222222;z-index:4;"></div>
-      <div id="tick5" style="position:absolute;left:159px;top:178px;width:4px;height:16px;background:#222222;z-index:4;"></div>
-      <div id="tick7" style="position:absolute;left:77px;top:178px;width:4px;height:16px;background:#222222;z-index:4;"></div>
-      <div id="tick8" style="position:absolute;left:54px;top:155px;width:4px;height:16px;background:#222222;z-index:4;"></div>
-      <div id="tick10" style="position:absolute;left:54px;top:69px;width:4px;height:16px;background:#222222;z-index:4;"></div>
-      <div id="tick11" style="position:absolute;left:77px;top:46px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+        <div id="tick1" style="position:absolute;left:159px;top:46px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+        <div id="tick2" style="position:absolute;left:182px;top:69px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+        <div id="tick4" style="position:absolute;left:182px;top:155px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+        <div id="tick5" style="position:absolute;left:159px;top:178px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+        <div id="tick7" style="position:absolute;left:77px;top:178px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+        <div id="tick8" style="position:absolute;left:54px;top:155px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+        <div id="tick10" style="position:absolute;left:54px;top:69px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+        <div id="tick11" style="position:absolute;left:77px;top:46px;width:4px;height:16px;background:#222222;z-index:4;"></div>
 
-      <div id="analogMark12" style="position:absolute;left:101px;top:18px;width:38px;height:28px;text-align:center;font-size:24px;line-height:28px;color:#222222;z-index:5;">12</div>
-      <div id="analogMark9" style="position:absolute;left:24px;top:106px;width:28px;height:28px;text-align:center;font-size:24px;line-height:28px;color:#222222;z-index:5;">9</div>
-      <div id="analogMark6" style="position:absolute;left:106px;top:192px;width:28px;height:28px;text-align:center;font-size:24px;line-height:28px;color:#222222;z-index:5;">6</div>
+        <div id="analogMark12" style="position:absolute;left:101px;top:18px;width:38px;height:28px;text-align:center;font-size:24px;line-height:28px;color:#222222;z-index:5;">12</div>
+        <div id="analogMark9" style="position:absolute;left:24px;top:106px;width:28px;height:28px;text-align:center;font-size:24px;line-height:28px;color:#222222;z-index:5;">9</div>
+        <div id="analogMark6" style="position:absolute;left:106px;top:192px;width:28px;height:28px;text-align:center;font-size:24px;line-height:28px;color:#222222;z-index:5;">6</div>
 
-      <div id="analogDateBox" style="position:absolute;left:182px;top:108px;width:32px;height:24px;margin-top:-12px;border:2px solid #222222;background:#ffffff;text-align:center;font-size:18px;line-height:24px;color:#222222;z-index:5;">1</div>
+        <div id="analogDateBox" style="position:absolute;left:176px;top:108px;width:40px;height:24px;border:2px solid #222222;background:#ffffff;text-align:center;font-size:18px;line-height:24px;color:#222222;z-index:5;">1</div>
 
-      <div id="analogCenter" style="position:absolute;left:117px;top:117px;width:6px;height:6px;background:#222222;border-radius:3px;z-index:20;"></div>
+        <div id="analogCenter" style="position:absolute;left:116px;top:116px;width:8px;height:8px;background:#222222;border-radius:4px;z-index:20;"></div>
 
-      <div id="hourHand" style="position:absolute;left:118px;top:70px;width:4px;height:50px;background:#222222;z-index:8;"></div>
-      <div id="minuteHand" style="position:absolute;left:119px;top:44px;width:3px;height:76px;background:#222222;z-index:9;"></div>
-      <div id="secondHand" style="position:absolute;left:119px;top:30px;width:2px;height:90px;background:#cc2222;z-index:10;"></div>
+        <div id="hourHand" style="position:absolute;left:116px;top:78px;width:9px;height:42px;background:#f7eed7;z-index:8;"></div>
+        <div id="minuteHand" style="position:absolute;left:118px;top:48px;width:4px;height:72px;background:#f7eed7;z-index:9;"></div>
+        <div id="secondHand" style="position:absolute;left:119px;top:24px;width:2px;height:96px;background:#ff5e00;z-index:10;"></div>
+
+      </div>
 
     </div>
-
   </div>
 
 </div>
@@ -328,7 +389,7 @@ var currentView = "clock";
 var analogLongPressTimer = null;
 var analogLongPressTriggered = false;
 var ignoreNextAppClick = false;
-var analogStyleIndex = 0;
+var analogStyleIndex = 1;
 
 var tickData = [
   { id: "tick1",  x: 161, y: 54,  rot: 30 },
@@ -346,218 +407,74 @@ var analogStyles = [
     faceBg: "#f6f6f1", faceBorder: "#222222", outerBorderWidth: 4,
     textColor: "#222222", markFontSize: 24,
     tickColor: "#222222", tickWidth: 4, tickLength: 16, tickRadius: 0,
-    dateBg: "#ffffff", dateBorder: "#222222", dateBorderWidth: 2, dateColor: "#222222", dateWidth: 32, dateHeight: 24, dateFontSize: 18,
+    dateBg: "#ffffff", dateBorder: "#222222", dateBorderWidth: 2, dateColor: "#222222",
+    dateWidth: 32, dateHeight: 24, dateFontSize: 18, dateLeft: 182, dateTop: 108, dateRadius: 0,
     centerColor: "#222222", centerSize: 6,
     hourColor: "#222222", hourWidth: 4, hourLength: 50, hourRadius: 0,
     minuteColor: "#222222", minuteWidth: 3, minuteLength: 76, minuteRadius: 0,
     secondColor: "#cc2222", secondWidth: 2, secondLength: 90, secondRadius: 0
   },
   {
-    faceBg: "#111111", faceBorder: "#d9d2b6", outerBorderWidth: 5,
-    textColor: "#f2ead2", markFontSize: 24,
-    tickColor: "#f2ead2", tickWidth: 4, tickLength: 20, tickRadius: 0,
-    dateBg: "#f2ead2", dateBorder: "#111111", dateBorderWidth: 2, dateColor: "#111111", dateWidth: 34, dateHeight: 24, dateFontSize: 18,
-    centerColor: "#f2ead2", centerSize: 7,
-    hourColor: "#f2ead2", hourWidth: 7, hourLength: 46, hourRadius: 0,
-    minuteColor: "#f2ead2", minuteWidth: 4, minuteLength: 74, minuteRadius: 0,
-    secondColor: "#ff6a00", secondWidth: 2, secondLength: 92, secondRadius: 0
+    faceBg: "#111111", faceBorder: "#e8ddc2", outerBorderWidth: 6,
+    textColor: "#f7eed7", markFontSize: 25,
+    tickColor: "#f7eed7", tickWidth: 5, tickLength: 22, tickRadius: 0,
+    dateBg: "#f7eed7", dateBorder: "#111111", dateBorderWidth: 3, dateColor: "#111111",
+    dateWidth: 40, dateHeight: 24, dateFontSize: 18, dateLeft: 176, dateTop: 108, dateRadius: 0,
+    centerColor: "#f7eed7", centerSize: 8,
+    hourColor: "#f7eed7", hourWidth: 9, hourLength: 42, hourRadius: 0,
+    minuteColor: "#f7eed7", minuteWidth: 4, minuteLength: 72, minuteRadius: 0,
+    secondColor: "#ff5e00", secondWidth: 2, secondLength: 96, secondRadius: 0
   },
   {
-    faceBg: "#0e1b2d", faceBorder: "#7f98b5", outerBorderWidth: 5,
-    textColor: "#dde8f5", markFontSize: 23,
-    tickColor: "#dde8f5", tickWidth: 3, tickLength: 18, tickRadius: 1,
-    dateBg: "#dde8f5", dateBorder: "#0e1b2d", dateBorderWidth: 2, dateColor: "#0e1b2d", dateWidth: 34, dateHeight: 24, dateFontSize: 18,
-    centerColor: "#dde8f5", centerSize: 6,
-    hourColor: "#dde8f5", hourWidth: 6, hourLength: 48, hourRadius: 0,
-    minuteColor: "#77b4ff", minuteWidth: 4, minuteLength: 80, minuteRadius: 0,
-    secondColor: "#ff4d4d", secondWidth: 2, secondLength: 92, secondRadius: 0
-  },
-  {
-    faceBg: "#fff7d6", faceBorder: "#3a2a1f", outerBorderWidth: 4,
-    textColor: "#3a2a1f", markFontSize: 24,
-    tickColor: "#3a2a1f", tickWidth: 4, tickLength: 15, tickRadius: 2,
-    dateBg: "#fffdf0", dateBorder: "#3a2a1f", dateBorderWidth: 2, dateColor: "#3a2a1f", dateWidth: 34, dateHeight: 24, dateFontSize: 18,
-    centerColor: "#3a2a1f", centerSize: 7,
-    hourColor: "#5c3820", hourWidth: 7, hourLength: 44, hourRadius: 2,
-    minuteColor: "#5c3820", minuteWidth: 4, minuteLength: 72, minuteRadius: 2,
-    secondColor: "#d14b00", secondWidth: 2, secondLength: 88, secondRadius: 1
-  },
-  {
-    faceBg: "#f8efe9", faceBorder: "#6b5440", outerBorderWidth: 6,
-    textColor: "#5a4331", markFontSize: 22,
-    tickColor: "#5a4331", tickWidth: 5, tickLength: 14, tickRadius: 3,
-    dateBg: "#fff8f1", dateBorder: "#6b5440", dateBorderWidth: 2, dateColor: "#5a4331", dateWidth: 30, dateHeight: 22, dateFontSize: 17,
-    centerColor: "#5a4331", centerSize: 7,
-    hourColor: "#5a4331", hourWidth: 8, hourLength: 42, hourRadius: 3,
-    minuteColor: "#9b5f2c", minuteWidth: 4, minuteLength: 68, minuteRadius: 2,
-    secondColor: "#1c7c7c", secondWidth: 2, secondLength: 86, secondRadius: 1
-  },
-  {
-    faceBg: "#1b1b1b", faceBorder: "#00ffcc", outerBorderWidth: 5,
-    textColor: "#00ffcc", markFontSize: 24,
-    tickColor: "#00ffcc", tickWidth: 4, tickLength: 18, tickRadius: 0,
-    dateBg: "#001a14", dateBorder: "#00ffcc", dateBorderWidth: 2, dateColor: "#00ffcc", dateWidth: 34, dateHeight: 24, dateFontSize: 18,
-    centerColor: "#00ffcc", centerSize: 7,
-    hourColor: "#ff00aa", hourWidth: 7, hourLength: 44, hourRadius: 0,
-    minuteColor: "#ffee00", minuteWidth: 4, minuteLength: 74, minuteRadius: 0,
-    secondColor: "#ffffff", secondWidth: 2, secondLength: 92, secondRadius: 0
-  },
-  {
-    faceBg: "#0a0a0a", faceBorder: "#ff33cc", outerBorderWidth: 5,
-    textColor: "#ffee44", markFontSize: 23,
-    tickColor: "#ffaa00", tickWidth: 5, tickLength: 16, tickRadius: 1,
-    dateBg: "#1a0014", dateBorder: "#ff33cc", dateBorderWidth: 2, dateColor: "#ffee44", dateWidth: 36, dateHeight: 24, dateFontSize: 18,
-    centerColor: "#ff33cc", centerSize: 8,
-    hourColor: "#00e0ff", hourWidth: 8, hourLength: 42, hourRadius: 1,
-    minuteColor: "#ff33cc", minuteWidth: 4, minuteLength: 70, minuteRadius: 1,
-    secondColor: "#ffffff", secondWidth: 2, secondLength: 90, secondRadius: 0
-  },
-  {
-    faceBg: "#f2f2f2", faceBorder: "#000000", outerBorderWidth: 6,
-    textColor: "#000000", markFontSize: 25,
-    tickColor: "#000000", tickWidth: 5, tickLength: 18, tickRadius: 0,
-    dateBg: "#ffffff", dateBorder: "#000000", dateBorderWidth: 2, dateColor: "#000000", dateWidth: 32, dateHeight: 24, dateFontSize: 18,
-    centerColor: "#000000", centerSize: 8,
-    hourColor: "#000000", hourWidth: 8, hourLength: 40, hourRadius: 0,
-    minuteColor: "#444444", minuteWidth: 3, minuteLength: 78, minuteRadius: 0,
-    secondColor: "#ff0000", secondWidth: 2, secondLength: 94, secondRadius: 0
-  },
-  {
-    faceBg: "#e8f7ea", faceBorder: "#204020", outerBorderWidth: 4,
-    textColor: "#204020", markFontSize: 22,
-    tickColor: "#204020", tickWidth: 4, tickLength: 16, tickRadius: 2,
-    dateBg: "#f8fff9", dateBorder: "#204020", dateBorderWidth: 2, dateColor: "#204020", dateWidth: 32, dateHeight: 24, dateFontSize: 18,
-    centerColor: "#204020", centerSize: 7,
-    hourColor: "#204020", hourWidth: 6, hourLength: 52, hourRadius: 2,
-    minuteColor: "#0f5f8a", minuteWidth: 4, minuteLength: 74, minuteRadius: 2,
-    secondColor: "#cc3366", secondWidth: 2, secondLength: 90, secondRadius: 1
-  },
-  {
-    faceBg: "#101820", faceBorder: "#d6b36a", outerBorderWidth: 5,
-    textColor: "#f0d890", markFontSize: 24,
-    tickColor: "#f0d890", tickWidth: 4, tickLength: 18, tickRadius: 1,
-    dateBg: "#f7eed2", dateBorder: "#8a6b2f", dateBorderWidth: 2, dateColor: "#4f3e19", dateWidth: 36, dateHeight: 24, dateFontSize: 18,
-    centerColor: "#d6b36a", centerSize: 7,
-    hourColor: "#d6b36a", hourWidth: 6, hourLength: 46, hourRadius: 1,
-    minuteColor: "#d6b36a", minuteWidth: 4, minuteLength: 76, minuteRadius: 1,
-    secondColor: "#ff5e5e", secondWidth: 2, secondLength: 92, secondRadius: 0
-  },
-  {
-    faceBg: "#f4f0ff", faceBorder: "#5a3ea6", outerBorderWidth: 4,
-    textColor: "#5a3ea6", markFontSize: 23,
-    tickColor: "#5a3ea6", tickWidth: 4, tickLength: 15, tickRadius: 2,
-    dateBg: "#ffffff", dateBorder: "#5a3ea6", dateBorderWidth: 2, dateColor: "#5a3ea6", dateWidth: 32, dateHeight: 24, dateFontSize: 18,
-    centerColor: "#5a3ea6", centerSize: 7,
-    hourColor: "#5a3ea6", hourWidth: 7, hourLength: 44, hourRadius: 3,
-    minuteColor: "#a02cff", minuteWidth: 4, minuteLength: 72, minuteRadius: 2,
-    secondColor: "#ff9f1c", secondWidth: 2, secondLength: 88, secondRadius: 1
-  },
-  {
-    faceBg: "#eaf4ff", faceBorder: "#244c73", outerBorderWidth: 4,
-    textColor: "#244c73", markFontSize: 24,
-    tickColor: "#244c73", tickWidth: 3, tickLength: 16, tickRadius: 2,
-    dateBg: "#ffffff", dateBorder: "#244c73", dateBorderWidth: 2, dateColor: "#244c73", dateWidth: 34, dateHeight: 24, dateFontSize: 18,
-    centerColor: "#244c73", centerSize: 6,
-    hourColor: "#244c73", hourWidth: 5, hourLength: 48, hourRadius: 2,
-    minuteColor: "#3e7cb1", minuteWidth: 3, minuteLength: 80, minuteRadius: 2,
-    secondColor: "#e63946", secondWidth: 2, secondLength: 92, secondRadius: 1
-  },
-  {
-    faceBg: "#fff0f0", faceBorder: "#8f1d1d", outerBorderWidth: 5,
-    textColor: "#8f1d1d", markFontSize: 23,
-    tickColor: "#8f1d1d", tickWidth: 5, tickLength: 16, tickRadius: 0,
-    dateBg: "#ffffff", dateBorder: "#8f1d1d", dateBorderWidth: 2, dateColor: "#8f1d1d", dateWidth: 32, dateHeight: 24, dateFontSize: 18,
-    centerColor: "#8f1d1d", centerSize: 7,
-    hourColor: "#8f1d1d", hourWidth: 8, hourLength: 42, hourRadius: 0,
-    minuteColor: "#cc5c5c", minuteWidth: 4, minuteLength: 70, minuteRadius: 0,
-    secondColor: "#222222", secondWidth: 2, secondLength: 88, secondRadius: 0
-  },
-  {
-    faceBg: "#0d0f16", faceBorder: "#7cfb4b", outerBorderWidth: 5,
-    textColor: "#d7ffd0", markFontSize: 23,
-    tickColor: "#7cfb4b", tickWidth: 4, tickLength: 20, tickRadius: 0,
-    dateBg: "#16210f", dateBorder: "#7cfb4b", dateBorderWidth: 2, dateColor: "#d7ffd0", dateWidth: 36, dateHeight: 24, dateFontSize: 18,
-    centerColor: "#7cfb4b", centerSize: 8,
-    hourColor: "#d7ffd0", hourWidth: 7, hourLength: 44, hourRadius: 0,
-    minuteColor: "#7cfb4b", minuteWidth: 4, minuteLength: 72, minuteRadius: 0,
-    secondColor: "#ff3b3b", secondWidth: 2, secondLength: 94, secondRadius: 0
-  },
-  {
-    faceBg: "#fff8e6", faceBorder: "#333333", outerBorderWidth: 4,
-    textColor: "#222222", markFontSize: 24,
-    tickColor: "#555555", tickWidth: 3, tickLength: 14, tickRadius: 3,
-    dateBg: "#ffffff", dateBorder: "#333333", dateBorderWidth: 2, dateColor: "#222222", dateWidth: 30, dateHeight: 22, dateFontSize: 17,
-    centerColor: "#222222", centerSize: 6,
-    hourColor: "#222222", hourWidth: 5, hourLength: 50, hourRadius: 3,
-    minuteColor: "#444444", minuteWidth: 3, minuteLength: 82, minuteRadius: 3,
-    secondColor: "#c93b3b", secondWidth: 1, secondLength: 94, secondRadius: 0
-  },
-
-  {
-    faceBg: "#0f0f0f", faceBorder: "#f5f5f5", outerBorderWidth: 7,
-    textColor: "#f5f5f5", markFontSize: 26,
-    tickColor: "#f5f5f5", tickWidth: 6, tickLength: 22, tickRadius: 0,
-    dateBg: "#ffffff", dateBorder: "#0f0f0f", dateBorderWidth: 3, dateColor: "#0f0f0f", dateWidth: 38, dateHeight: 26, dateFontSize: 19,
-    centerColor: "#f5f5f5", centerSize: 9,
-    hourColor: "#f5f5f5", hourWidth: 10, hourLength: 40, hourRadius: 0,
-    minuteColor: "#f5f5f5", minuteWidth: 5, minuteLength: 68, minuteRadius: 0,
-    secondColor: "#ff4b00", secondWidth: 3, secondLength: 98, secondRadius: 0
-  },
-  {
-    faceBg: "#0c1320", faceBorder: "#dcdcdc", outerBorderWidth: 6,
+    faceBg: "#0c1320", faceBorder: "#d8d8d8", outerBorderWidth: 6,
     textColor: "#ffffff", markFontSize: 25,
     tickColor: "#ffffff", tickWidth: 5, tickLength: 20, tickRadius: 0,
-    dateBg: "#ffffff", dateBorder: "#0c1320", dateBorderWidth: 2, dateColor: "#0c1320", dateWidth: 38, dateHeight: 26, dateFontSize: 19,
+    dateBg: "#ffffff", dateBorder: "#0c1320", dateBorderWidth: 2, dateColor: "#0c1320",
+    dateWidth: 38, dateHeight: 26, dateFontSize: 19, dateLeft: 178, dateTop: 107, dateRadius: 0,
     centerColor: "#ffffff", centerSize: 8,
     hourColor: "#ffffff", hourWidth: 9, hourLength: 42, hourRadius: 0,
     minuteColor: "#ffcc00", minuteWidth: 5, minuteLength: 74, minuteRadius: 0,
     secondColor: "#ff3300", secondWidth: 2, secondLength: 96, secondRadius: 0
   },
   {
-    faceBg: "#111111", faceBorder: "#8cff00", outerBorderWidth: 6,
-    textColor: "#f4ffce", markFontSize: 24,
-    tickColor: "#8cff00", tickWidth: 5, tickLength: 22, tickRadius: 0,
-    dateBg: "#172300", dateBorder: "#8cff00", dateBorderWidth: 3, dateColor: "#f4ffce", dateWidth: 40, dateHeight: 26, dateFontSize: 19,
-    centerColor: "#8cff00", centerSize: 9,
-    hourColor: "#f4ffce", hourWidth: 9, hourLength: 38, hourRadius: 0,
-    minuteColor: "#8cff00", minuteWidth: 5, minuteLength: 70, minuteRadius: 0,
-    secondColor: "#ff2255", secondWidth: 3, secondLength: 98, secondRadius: 0
+    faceBg: "#0d0f16", faceBorder: "#7cfb4b", outerBorderWidth: 6,
+    textColor: "#d7ffd0", markFontSize: 24,
+    tickColor: "#7cfb4b", tickWidth: 4, tickLength: 22, tickRadius: 0,
+    dateBg: "#16210f", dateBorder: "#7cfb4b", dateBorderWidth: 3, dateColor: "#d7ffd0",
+    dateWidth: 42, dateHeight: 24, dateFontSize: 18, dateLeft: 174, dateTop: 108, dateRadius: 0,
+    centerColor: "#7cfb4b", centerSize: 8,
+    hourColor: "#d7ffd0", hourWidth: 8, hourLength: 40, hourRadius: 0,
+    minuteColor: "#7cfb4b", minuteWidth: 4, minuteLength: 70, minuteRadius: 0,
+    secondColor: "#ff3b3b", secondWidth: 3, secondLength: 98, secondRadius: 0
   },
   {
     faceBg: "#150018", faceBorder: "#ff00b3", outerBorderWidth: 7,
     textColor: "#ffde59", markFontSize: 25,
     tickColor: "#00f6ff", tickWidth: 6, tickLength: 20, tickRadius: 0,
-    dateBg: "#2c0030", dateBorder: "#ff00b3", dateBorderWidth: 3, dateColor: "#ffde59", dateWidth: 40, dateHeight: 26, dateFontSize: 19,
-    centerColor: "#00f6ff", centerSize: 8,
+    dateBg: "#2c0030", dateBorder: "#ff00b3", dateBorderWidth: 3, dateColor: "#ffde59",
+    dateWidth: 44, dateHeight: 26, dateFontSize: 19, dateLeft: 172, dateTop: 107, dateRadius: 0,
+    centerColor: "#00f6ff", centerSize: 9,
     hourColor: "#00f6ff", hourWidth: 10, hourLength: 36, hourRadius: 0,
     minuteColor: "#ff00b3", minuteWidth: 5, minuteLength: 68, minuteRadius: 0,
-    secondColor: "#ffffff", secondWidth: 3, secondLength: 96, secondRadius: 0
+    secondColor: "#ffffff", secondWidth: 3, secondLength: 98, secondRadius: 0
   },
   {
     faceBg: "#00111f", faceBorder: "#ff7a00", outerBorderWidth: 7,
     textColor: "#ffffff", markFontSize: 24,
     tickColor: "#ff7a00", tickWidth: 6, tickLength: 18, tickRadius: 2,
-    dateBg: "#ffffff", dateBorder: "#ff7a00", dateBorderWidth: 3, dateColor: "#00111f", dateWidth: 40, dateHeight: 26, dateFontSize: 19,
+    dateBg: "#ffffff", dateBorder: "#ff7a00", dateBorderWidth: 3, dateColor: "#00111f",
+    dateWidth: 42, dateHeight: 26, dateFontSize: 19, dateLeft: 174, dateTop: 107, dateRadius: 4,
     centerColor: "#ff7a00", centerSize: 8,
     hourColor: "#ff7a00", hourWidth: 10, hourLength: 38, hourRadius: 2,
     minuteColor: "#ffffff", minuteWidth: 4, minuteLength: 74, minuteRadius: 2,
     secondColor: "#00d0ff", secondWidth: 3, secondLength: 98, secondRadius: 1
   },
   {
-    faceBg: "#f7e7cf", faceBorder: "#2b2218", outerBorderWidth: 6,
-    textColor: "#2b2218", markFontSize: 26,
-    tickColor: "#2b2218", tickWidth: 5, tickLength: 18, tickRadius: 0,
-    dateBg: "#fff8ec", dateBorder: "#2b2218", dateBorderWidth: 3, dateColor: "#2b2218", dateWidth: 36, dateHeight: 25, dateFontSize: 18,
-    centerColor: "#2b2218", centerSize: 7,
-    hourColor: "#2b2218", hourWidth: 10, hourLength: 36, hourRadius: 0,
-    minuteColor: "#7b5b2d", minuteWidth: 5, minuteLength: 66, minuteRadius: 0,
-    secondColor: "#b30000", secondWidth: 2, secondLength: 92, secondRadius: 0
-  },
-  {
     faceBg: "#131313", faceBorder: "#f0c674", outerBorderWidth: 8,
     textColor: "#f0c674", markFontSize: 24,
     tickColor: "#f0c674", tickWidth: 6, tickLength: 24, tickRadius: 0,
-    dateBg: "#f7edd3", dateBorder: "#7c5d1a", dateBorderWidth: 3, dateColor: "#513b10", dateWidth: 42, dateHeight: 26, dateFontSize: 19,
+    dateBg: "#f7edd3", dateBorder: "#7c5d1a", dateBorderWidth: 3, dateColor: "#513b10",
+    dateWidth: 46, dateHeight: 26, dateFontSize: 19, dateLeft: 170, dateTop: 107, dateRadius: 1,
     centerColor: "#f0c674", centerSize: 9,
     hourColor: "#f0c674", hourWidth: 11, hourLength: 34, hourRadius: 0,
     minuteColor: "#f0c674", minuteWidth: 5, minuteLength: 64, minuteRadius: 0,
@@ -567,28 +484,62 @@ var analogStyles = [
     faceBg: "#f4efe3", faceBorder: "#1f1f1f", outerBorderWidth: 7,
     textColor: "#1f1f1f", markFontSize: 26,
     tickColor: "#1f1f1f", tickWidth: 4, tickLength: 16, tickRadius: 0,
-    dateBg: "#ffffff", dateBorder: "#1f1f1f", dateBorderWidth: 2, dateColor: "#1f1f1f", dateWidth: 34, dateHeight: 24, dateFontSize: 18,
+    dateBg: "#ffffff", dateBorder: "#1f1f1f", dateBorderWidth: 2, dateColor: "#1f1f1f",
+    dateWidth: 34, dateHeight: 24, dateFontSize: 18, dateLeft: 182, dateTop: 108, dateRadius: 0,
     centerColor: "#1f1f1f", centerSize: 7,
     hourColor: "#1f1f1f", hourWidth: 9, hourLength: 40, hourRadius: 0,
     minuteColor: "#1f1f1f", minuteWidth: 4, minuteLength: 72, minuteRadius: 0,
     secondColor: "#0088ff", secondWidth: 2, secondLength: 92, secondRadius: 0
   },
   {
+    faceBg: "#fff8e6", faceBorder: "#333333", outerBorderWidth: 4,
+    textColor: "#222222", markFontSize: 24,
+    tickColor: "#555555", tickWidth: 3, tickLength: 14, tickRadius: 3,
+    dateBg: "#ffffff", dateBorder: "#333333", dateBorderWidth: 2, dateColor: "#222222",
+    dateWidth: 30, dateHeight: 22, dateFontSize: 17, dateLeft: 184, dateTop: 109, dateRadius: 6,
+    centerColor: "#222222", centerSize: 6,
+    hourColor: "#222222", hourWidth: 5, hourLength: 50, hourRadius: 3,
+    minuteColor: "#444444", minuteWidth: 3, minuteLength: 82, minuteRadius: 3,
+    secondColor: "#c93b3b", secondWidth: 1, secondLength: 94, secondRadius: 0
+  },
+  {
     faceBg: "#0b0012", faceBorder: "#ff5cff", outerBorderWidth: 7,
     textColor: "#ffffff", markFontSize: 25,
     tickColor: "#ffffff", tickWidth: 5, tickLength: 20, tickRadius: 0,
-    dateBg: "#250033", dateBorder: "#00eaff", dateBorderWidth: 3, dateColor: "#ffffff", dateWidth: 40, dateHeight: 26, dateFontSize: 19,
+    dateBg: "#250033", dateBorder: "#00eaff", dateBorderWidth: 3, dateColor: "#ffffff",
+    dateWidth: 44, dateHeight: 26, dateFontSize: 19, dateLeft: 172, dateTop: 107, dateRadius: 12,
     centerColor: "#00eaff", centerSize: 9,
     hourColor: "#ff5cff", hourWidth: 10, hourLength: 36, hourRadius: 0,
     minuteColor: "#00eaff", minuteWidth: 5, minuteLength: 70, minuteRadius: 0,
     secondColor: "#ffe600", secondWidth: 3, secondLength: 98, secondRadius: 0
+  },
+  {
+    faceBg: "#fff0f0", faceBorder: "#8f1d1d", outerBorderWidth: 5,
+    textColor: "#8f1d1d", markFontSize: 23,
+    tickColor: "#8f1d1d", tickWidth: 5, tickLength: 16, tickRadius: 0,
+    dateBg: "#ffffff", dateBorder: "#8f1d1d", dateBorderWidth: 3, dateColor: "#8f1d1d",
+    dateWidth: 36, dateHeight: 28, dateFontSize: 20, dateLeft: 180, dateTop: 106, dateRadius: 0,
+    centerColor: "#8f1d1d", centerSize: 7,
+    hourColor: "#8f1d1d", hourWidth: 8, hourLength: 42, hourRadius: 0,
+    minuteColor: "#cc5c5c", minuteWidth: 4, minuteLength: 70, minuteRadius: 0,
+    secondColor: "#222222", secondWidth: 2, secondLength: 88, secondRadius: 0
+  },
+  {
+    faceBg: "#101820", faceBorder: "#d6b36a", outerBorderWidth: 5,
+    textColor: "#f0d890", markFontSize: 24,
+    tickColor: "#f0d890", tickWidth: 4, tickLength: 18, tickRadius: 1,
+    dateBg: "#f7eed2", dateBorder: "#8a6b2f", dateBorderWidth: 2, dateColor: "#4f3e19",
+    dateWidth: 32, dateHeight: 32, dateFontSize: 18, dateLeft: 182, dateTop: 104, dateRadius: 0,
+    centerColor: "#d6b36a", centerSize: 7,
+    hourColor: "#d6b36a", hourWidth: 6, hourLength: 46, hourRadius: 1,
+    minuteColor: "#d6b36a", minuteWidth: 4, minuteLength: 76, minuteRadius: 1,
+    secondColor: "#ff5e5e", secondWidth: 2, secondLength: 92, secondRadius: 0
   }
 ];
 
 var analogStylePool = [
-  5,5,6,6,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20,21,21,
-  1,1,2,2,9,9,10,10,11,11,7,7,
-  3,4,8,0
+  1,1,2,2,3,3,4,4,5,5,6,6,7,7,9,9,10,10,11,11,
+  0,8
 ];
 
 function setColor(id, color) {
@@ -674,11 +625,11 @@ function applyAnalogStyle(index) {
   dateBox.style.color = s.dateColor;
   dateBox.style.width = s.dateWidth + "px";
   dateBox.style.height = s.dateHeight + "px";
-  dateBox.style.left = "182px";
-  dateBox.style.top = (120 - Math.floor(s.dateHeight / 2)) + "px";
-  dateBox.style.marginTop = "0";
+  dateBox.style.left = s.dateLeft + "px";
+  dateBox.style.top = s.dateTop + "px";
   dateBox.style.fontSize = s.dateFontSize + "px";
   dateBox.style.lineHeight = s.dateHeight + "px";
+  dateBox.style.borderRadius = s.dateRadius + "px";
 
   center.style.background = s.centerColor;
   center.style.width = s.centerSize + "px";
@@ -888,6 +839,41 @@ function updateCalendar() {
   }
 }
 
+function fitStage(stageId, baseWidth, baseHeight) {
+  var stage = document.getElementById(stageId);
+  var app = document.getElementById("app");
+  var availableWidth = app.clientWidth - 16;
+  var availableHeight = app.clientHeight - 16;
+  var scaleX = availableWidth / baseWidth;
+  var scaleY = availableHeight / baseHeight;
+  var scale = scaleX < scaleY ? scaleX : scaleY;
+
+  if (scale > 1.85) {
+    scale = 1.85;
+  }
+  if (scale < 0.5) {
+    scale = 0.5;
+  }
+
+  var scaledWidth = baseWidth * scale;
+  var scaledHeight = baseHeight * scale;
+
+  stage.style.webkitTransform = "scale(" + scale + ")";
+  stage.style.transform = "scale(" + scale + ")";
+  stage.style.left = Math.floor((app.clientWidth - scaledWidth) / 2) + "px";
+  stage.style.top = Math.floor((app.clientHeight - scaledHeight) / 2) + "px";
+}
+
+function fitCurrentView() {
+  if (currentView == "clock") {
+    fitStage("clockStage", 300, 210);
+  } else if (currentView == "calendar") {
+    fitStage("calendarStage", 300, 330);
+  } else {
+    fitStage("analogStage", 240, 240);
+  }
+}
+
 function renderViews() {
   document.getElementById("clockView").style.display = (currentView == "clock") ? "block" : "none";
   document.getElementById("calendarView").style.display = (currentView == "calendar") ? "block" : "none";
@@ -900,6 +886,8 @@ function renderViews() {
   } else {
     updateAnalog();
   }
+
+  fitCurrentView();
 }
 
 function goToStartClock() {
@@ -952,6 +940,7 @@ function handleAppTap() {
       return;
     }
     randomizeAnalogStyle();
+    fitCurrentView();
   }
 }
 
@@ -967,9 +956,11 @@ if (appElement.addEventListener) {
   appElement.addEventListener("mousedown", startAnalogLongPress, false);
   appElement.addEventListener("mouseup", cancelAnalogLongPress, false);
   appElement.addEventListener("mouseleave", cancelAnalogLongPress, false);
+
+  appElement.addEventListener("orientationchange", fitCurrentView, false);
+  window.addEventListener("resize", fitCurrentView, false);
 }
 
-analogStyleIndex = 0;
 applyAnalogStyle(analogStyleIndex);
 renderViews();
 
