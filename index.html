@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Berlin-Uhr – Uhr und Kalender</title>
+  <title>Berlin-Uhr – Uhr, Kalender und Analog</title>
 
-  <!-- Version 28 -->
+  <!-- Version 29 -->
 
 </head>
 <body style="margin:0;padding:20px;background:#eeeeee;font-family:Arial,Helvetica,sans-serif;">
@@ -289,10 +289,163 @@
     </div>
 
   </div>
+
+  <div id="analogView" style="display:none;">
+
+    <div style="width:240px;height:240px;margin:0 auto;position:relative;" id="analogFace">
+      <div id="analogOuter" style="position:absolute;left:10px;top:10px;width:220px;height:220px;border:4px solid #222222;border-radius:110px;background:#f6f6f1;"></div>
+
+      <div id="analogMark12" style="position:absolute;left:111px;top:24px;width:18px;height:24px;margin-left:-9px;text-align:center;font-size:24px;line-height:24px;color:#222222;">12</div>
+      <div id="analogMark9" style="position:absolute;left:28px;top:108px;width:24px;height:24px;margin-top:-12px;text-align:center;font-size:24px;line-height:24px;color:#222222;">9</div>
+      <div id="analogMark6" style="position:absolute;left:111px;top:192px;width:18px;height:24px;margin-left:-9px;text-align:center;font-size:24px;line-height:24px;color:#222222;">6</div>
+
+      <div id="analogDateBox" style="position:absolute;left:182px;top:106px;width:32px;height:24px;margin-top:-12px;border:2px solid #222222;background:#ffffff;text-align:center;font-size:18px;line-height:24px;color:#222222;">1</div>
+
+      <div id="analogCenter" style="position:absolute;left:117px;top:117px;width:6px;height:6px;margin-left:-3px;margin-top:-3px;background:#222222;border-radius:3px;z-index:20;"></div>
+
+      <div id="hourHand" style="position:absolute;left:118px;top:72px;width:4px;height:50px;margin-left:-2px;background:#222222;z-index:8;"></div>
+      <div id="minuteHand" style="position:absolute;left:118px;top:46px;width:3px;height:76px;margin-left:-1px;background:#222222;z-index:9;"></div>
+      <div id="secondHand" style="position:absolute;left:119px;top:32px;width:2px;height:90px;margin-left:-1px;background:#cc2222;z-index:10;"></div>
+    </div>
+
+  </div>
+
 </div>
 
 <script type="text/javascript">
-var showCalendar = false;
+var currentView = "clock";
+var analogTapTimer = null;
+var analogLastTap = 0;
+var analogStyleIndex = 0;
+
+var analogStyles = [
+  {
+    faceBg: "#f6f6f1",
+    faceBorder: "#222222",
+    textColor: "#222222",
+    dateBg: "#ffffff",
+    dateBorder: "#222222",
+    dateColor: "#222222",
+    centerColor: "#222222",
+    hourColor: "#222222",
+    minuteColor: "#222222",
+    secondColor: "#cc2222",
+    hourWidth: 4,
+    hourLength: 50,
+    minuteWidth: 3,
+    minuteLength: 76,
+    secondWidth: 2,
+    secondLength: 90,
+    hourTop: 72,
+    minuteTop: 46,
+    secondTop: 32
+  },
+  {
+    faceBg: "#fff7d6",
+    faceBorder: "#111111",
+    textColor: "#111111",
+    dateBg: "#fffdf0",
+    dateBorder: "#111111",
+    dateColor: "#111111",
+    centerColor: "#111111",
+    hourColor: "#0f4c81",
+    minuteColor: "#0f4c81",
+    secondColor: "#d14b00",
+    hourWidth: 6,
+    hourLength: 46,
+    minuteWidth: 4,
+    minuteLength: 72,
+    secondWidth: 2,
+    secondLength: 86,
+    hourTop: 76,
+    minuteTop: 50,
+    secondTop: 36
+  },
+  {
+    faceBg: "#eef3f8",
+    faceBorder: "#333333",
+    textColor: "#333333",
+    dateBg: "#ffffff",
+    dateBorder: "#333333",
+    dateColor: "#333333",
+    centerColor: "#333333",
+    hourColor: "#333333",
+    minuteColor: "#2a6f3b",
+    secondColor: "#aa2222",
+    hourWidth: 5,
+    hourLength: 48,
+    minuteWidth: 3,
+    minuteLength: 82,
+    secondWidth: 1,
+    secondLength: 92,
+    hourTop: 74,
+    minuteTop: 40,
+    secondTop: 30
+  },
+  {
+    faceBg: "#f8efe9",
+    faceBorder: "#3a2a1f",
+    textColor: "#3a2a1f",
+    dateBg: "#fff8f1",
+    dateBorder: "#3a2a1f",
+    dateColor: "#3a2a1f",
+    centerColor: "#3a2a1f",
+    hourColor: "#3a2a1f",
+    minuteColor: "#3a2a1f",
+    secondColor: "#1c7c7c",
+    hourWidth: 6,
+    hourLength: 44,
+    minuteWidth: 4,
+    minuteLength: 70,
+    secondWidth: 2,
+    secondLength: 88,
+    hourTop: 78,
+    minuteTop: 52,
+    secondTop: 34
+  },
+  {
+    faceBg: "#f2f2f2",
+    faceBorder: "#000000",
+    textColor: "#000000",
+    dateBg: "#ffffff",
+    dateBorder: "#000000",
+    dateColor: "#000000",
+    centerColor: "#000000",
+    hourColor: "#000000",
+    minuteColor: "#444444",
+    secondColor: "#ff0000",
+    hourWidth: 7,
+    hourLength: 42,
+    minuteWidth: 3,
+    minuteLength: 78,
+    secondWidth: 2,
+    secondLength: 94,
+    hourTop: 80,
+    minuteTop: 44,
+    secondTop: 28
+  },
+  {
+    faceBg: "#e8f7ea",
+    faceBorder: "#204020",
+    textColor: "#204020",
+    dateBg: "#f8fff9",
+    dateBorder: "#204020",
+    dateColor: "#204020",
+    centerColor: "#204020",
+    hourColor: "#204020",
+    minuteColor: "#0f5f8a",
+    secondColor: "#cc3366",
+    hourWidth: 5,
+    hourLength: 52,
+    minuteWidth: 4,
+    minuteLength: 74,
+    secondWidth: 2,
+    secondLength: 90,
+    hourTop: 70,
+    minuteTop: 48,
+    secondTop: 32
+  }
+];
 
 function setColor(id, color) {
   var e = document.getElementById(id);
@@ -314,6 +467,89 @@ function getWeekdayIndex(d) {
     return 6;
   }
   return wd - 1;
+}
+
+function rotateElement(el, deg) {
+  if (!el) {
+    return;
+  }
+  el.style.webkitTransform = "rotate(" + deg + "deg)";
+  el.style.transform = "rotate(" + deg + "deg)";
+  el.style.webkitTransformOrigin = "50% 100%";
+  el.style.transformOrigin = "50% 100%";
+}
+
+function applyAnalogStyle(index) {
+  var s = analogStyles[index];
+  var outer = document.getElementById("analogOuter");
+  var m12 = document.getElementById("analogMark12");
+  var m9 = document.getElementById("analogMark9");
+  var m6 = document.getElementById("analogMark6");
+  var dateBox = document.getElementById("analogDateBox");
+  var center = document.getElementById("analogCenter");
+  var hourHand = document.getElementById("hourHand");
+  var minuteHand = document.getElementById("minuteHand");
+  var secondHand = document.getElementById("secondHand");
+
+  outer.style.background = s.faceBg;
+  outer.style.borderColor = s.faceBorder;
+
+  m12.style.color = s.textColor;
+  m9.style.color = s.textColor;
+  m6.style.color = s.textColor;
+
+  dateBox.style.background = s.dateBg;
+  dateBox.style.borderColor = s.dateBorder;
+  dateBox.style.color = s.dateColor;
+
+  center.style.background = s.centerColor;
+
+  hourHand.style.background = s.hourColor;
+  hourHand.style.width = s.hourWidth + "px";
+  hourHand.style.height = s.hourLength + "px";
+  hourHand.style.left = (120 - Math.floor(s.hourWidth / 2)) + "px";
+  hourHand.style.top = s.hourTop + "px";
+  hourHand.style.marginLeft = "0";
+
+  minuteHand.style.background = s.minuteColor;
+  minuteHand.style.width = s.minuteWidth + "px";
+  minuteHand.style.height = s.minuteLength + "px";
+  minuteHand.style.left = (120 - Math.floor(s.minuteWidth / 2)) + "px";
+  minuteHand.style.top = s.minuteTop + "px";
+  minuteHand.style.marginLeft = "0";
+
+  secondHand.style.background = s.secondColor;
+  secondHand.style.width = s.secondWidth + "px";
+  secondHand.style.height = s.secondLength + "px";
+  secondHand.style.left = (120 - Math.floor(s.secondWidth / 2)) + "px";
+  secondHand.style.top = s.secondTop + "px";
+  secondHand.style.marginLeft = "0";
+}
+
+function randomizeAnalogStyle() {
+  var nextIndex = analogStyleIndex;
+  while (nextIndex == analogStyleIndex) {
+    nextIndex = Math.floor(Math.random() * analogStyles.length);
+  }
+  analogStyleIndex = nextIndex;
+  applyAnalogStyle(analogStyleIndex);
+}
+
+function updateAnalog() {
+  var d = new Date();
+  var h = d.getHours();
+  var m = d.getMinutes();
+  var s = d.getSeconds();
+  var day = d.getDate();
+
+  var hourDeg = ((h % 12) * 30) + (m * 0.5);
+  var minuteDeg = (m * 6) + (s * 0.1);
+  var secondDeg = s * 6;
+
+  document.getElementById("analogDateBox").innerHTML = day;
+  rotateElement(document.getElementById("hourHand"), hourDeg);
+  rotateElement(document.getElementById("minuteHand"), minuteDeg);
+  rotateElement(document.getElementById("secondHand"), secondDeg);
 }
 
 function updateClock() {
@@ -465,25 +701,60 @@ function updateCalendar() {
 }
 
 function renderViews() {
-  if (showCalendar) {
-    document.getElementById("clockView").style.display = "none";
-    document.getElementById("calendarView").style.display = "block";
+  document.getElementById("clockView").style.display = (currentView == "clock") ? "block" : "none";
+  document.getElementById("calendarView").style.display = (currentView == "calendar") ? "block" : "none";
+  document.getElementById("analogView").style.display = (currentView == "analog") ? "block" : "none";
+
+  if (currentView == "clock") {
+    updateClock();
+  } else if (currentView == "calendar") {
     updateCalendar();
   } else {
-    document.getElementById("clockView").style.display = "block";
-    document.getElementById("calendarView").style.display = "none";
-    updateClock();
+    updateAnalog();
   }
 }
 
-function toggleView() {
-  showCalendar = !showCalendar;
+function goToStartClock() {
+  currentView = "clock";
   renderViews();
 }
 
-document.getElementById("app").onclick = toggleView;
+function handleAnalogTap() {
+  var now = new Date().getTime();
 
+  if (analogTapTimer && (now - analogLastTap) < 350) {
+    clearTimeout(analogTapTimer);
+    analogTapTimer = null;
+    analogLastTap = 0;
+    goToStartClock();
+    return;
+  }
+
+  analogLastTap = now;
+  analogTapTimer = setTimeout(function () {
+    randomizeAnalogStyle();
+    analogTapTimer = null;
+  }, 350);
+}
+
+function handleAppTap() {
+  if (currentView == "clock") {
+    currentView = "calendar";
+    renderViews();
+  } else if (currentView == "calendar") {
+    currentView = "analog";
+    renderViews();
+  } else {
+    handleAnalogTap();
+  }
+}
+
+document.getElementById("app").onclick = handleAppTap;
+
+analogStyleIndex = 0;
+applyAnalogStyle(analogStyleIndex);
 renderViews();
+
 setInterval(function () {
   renderViews();
 }, 1000);
