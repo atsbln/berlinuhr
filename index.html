@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Berlin-Uhr – Uhr, Kalender und Analog</title>
 
-  <!-- Version 29 -->
+  <!-- Version 30 -->
 
 </head>
 <body style="margin:0;padding:20px;background:#eeeeee;font-family:Arial,Helvetica,sans-serif;">
@@ -315,7 +315,8 @@
 <script type="text/javascript">
 var currentView = "clock";
 var analogTapTimer = null;
-var analogLastTap = 0;
+var analogLongPressTimer = null;
+var analogLongPressTriggered = false;
 var analogStyleIndex = 0;
 
 var analogStyles = [
@@ -719,22 +720,29 @@ function goToStartClock() {
   renderViews();
 }
 
-function handleAnalogTap() {
-  var now = new Date().getTime();
-
-  if (analogTapTimer && (now - analogLastTap) < 350) {
-    clearTimeout(analogTapTimer);
-    analogTapTimer = null;
-    analogLastTap = 0;
-    goToStartClock();
+function startAnalogLongPress() {
+  if (currentView != "analog") {
     return;
   }
 
-  analogLastTap = now;
-  analogTapTimer = setTimeout(function () {
-    randomizeAnalogStyle();
-    analogTapTimer = null;
-  }, 350);
+  analogLongPressTriggered = false;
+
+  if (analogLongPressTimer) {
+    clearTimeout(analogLongPressTimer);
+  }
+
+  analogLongPressTimer = setTimeout(function () {
+    analogLongPressTriggered = true;
+    goToStartClock();
+    analogLongPressTimer = null;
+  }, 700);
+}
+
+function cancelAnalogLongPress() {
+  if (analogLongPressTimer) {
+    clearTimeout(analogLongPressTimer);
+    analogLongPressTimer = null;
+  }
 }
 
 function handleAppTap() {
@@ -745,11 +753,27 @@ function handleAppTap() {
     currentView = "analog";
     renderViews();
   } else {
-    handleAnalogTap();
+    if (analogLongPressTriggered) {
+      analogLongPressTriggered = false;
+      return;
+    }
+    randomizeAnalogStyle();
   }
 }
 
-document.getElementById("app").onclick = handleAppTap;
+var appElement = document.getElementById("app");
+
+appElement.onclick = handleAppTap;
+
+if (appElement.addEventListener) {
+  appElement.addEventListener("touchstart", startAnalogLongPress, false);
+  appElement.addEventListener("touchend", cancelAnalogLongPress, false);
+  appElement.addEventListener("touchcancel", cancelAnalogLongPress, false);
+
+  appElement.addEventListener("mousedown", startAnalogLongPress, false);
+  appElement.addEventListener("mouseup", cancelAnalogLongPress, false);
+  appElement.addEventListener("mouseleave", cancelAnalogLongPress, false);
+}
 
 analogStyleIndex = 0;
 applyAnalogStyle(analogStyleIndex);
