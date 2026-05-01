@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Berlin-Uhr – Uhr, Kalender und Analog</title>
 
-  <!-- Version 30 -->
+  <!-- Version 31 -->
 
 </head>
-<body style="margin:0;padding:20px;background:#eeeeee;font-family:Arial,Helvetica,sans-serif;">
+<body style="margin:0;padding:20px;background:#eeeeee;font-family:Arial,Helvetica,sans-serif;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;">
 
 <div style="height:40px;"></div>
 
@@ -293,19 +293,30 @@
   <div id="analogView" style="display:none;">
 
     <div style="width:240px;height:240px;margin:0 auto;position:relative;" id="analogFace">
+
       <div id="analogOuter" style="position:absolute;left:10px;top:10px;width:220px;height:220px;border:4px solid #222222;border-radius:110px;background:#f6f6f1;"></div>
 
-      <div id="analogMark12" style="position:absolute;left:111px;top:24px;width:18px;height:24px;margin-left:-9px;text-align:center;font-size:24px;line-height:24px;color:#222222;">12</div>
-      <div id="analogMark9" style="position:absolute;left:28px;top:108px;width:24px;height:24px;margin-top:-12px;text-align:center;font-size:24px;line-height:24px;color:#222222;">9</div>
-      <div id="analogMark6" style="position:absolute;left:111px;top:192px;width:18px;height:24px;margin-left:-9px;text-align:center;font-size:24px;line-height:24px;color:#222222;">6</div>
+      <div id="tick1" style="position:absolute;left:159px;top:46px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+      <div id="tick2" style="position:absolute;left:182px;top:69px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+      <div id="tick4" style="position:absolute;left:182px;top:155px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+      <div id="tick5" style="position:absolute;left:159px;top:178px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+      <div id="tick7" style="position:absolute;left:77px;top:178px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+      <div id="tick8" style="position:absolute;left:54px;top:155px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+      <div id="tick10" style="position:absolute;left:54px;top:69px;width:4px;height:16px;background:#222222;z-index:4;"></div>
+      <div id="tick11" style="position:absolute;left:77px;top:46px;width:4px;height:16px;background:#222222;z-index:4;"></div>
 
-      <div id="analogDateBox" style="position:absolute;left:182px;top:106px;width:32px;height:24px;margin-top:-12px;border:2px solid #222222;background:#ffffff;text-align:center;font-size:18px;line-height:24px;color:#222222;">1</div>
+      <div id="analogMark12" style="position:absolute;left:101px;top:18px;width:38px;height:28px;text-align:center;font-size:24px;line-height:28px;color:#222222;z-index:5;">12</div>
+      <div id="analogMark9" style="position:absolute;left:24px;top:106px;width:28px;height:28px;text-align:center;font-size:24px;line-height:28px;color:#222222;z-index:5;">9</div>
+      <div id="analogMark6" style="position:absolute;left:106px;top:192px;width:28px;height:28px;text-align:center;font-size:24px;line-height:28px;color:#222222;z-index:5;">6</div>
 
-      <div id="analogCenter" style="position:absolute;left:117px;top:117px;width:6px;height:6px;margin-left:-3px;margin-top:-3px;background:#222222;border-radius:3px;z-index:20;"></div>
+      <div id="analogDateBox" style="position:absolute;left:182px;top:108px;width:32px;height:24px;margin-top:-12px;border:2px solid #222222;background:#ffffff;text-align:center;font-size:18px;line-height:24px;color:#222222;z-index:5;">1</div>
 
-      <div id="hourHand" style="position:absolute;left:118px;top:72px;width:4px;height:50px;margin-left:-2px;background:#222222;z-index:8;"></div>
-      <div id="minuteHand" style="position:absolute;left:118px;top:46px;width:3px;height:76px;margin-left:-1px;background:#222222;z-index:9;"></div>
-      <div id="secondHand" style="position:absolute;left:119px;top:32px;width:2px;height:90px;margin-left:-1px;background:#cc2222;z-index:10;"></div>
+      <div id="analogCenter" style="position:absolute;left:117px;top:117px;width:6px;height:6px;background:#222222;border-radius:3px;z-index:20;"></div>
+
+      <div id="hourHand" style="position:absolute;left:118px;top:70px;width:4px;height:50px;background:#222222;z-index:8;"></div>
+      <div id="minuteHand" style="position:absolute;left:119px;top:44px;width:3px;height:76px;background:#222222;z-index:9;"></div>
+      <div id="secondHand" style="position:absolute;left:119px;top:30px;width:2px;height:90px;background:#cc2222;z-index:10;"></div>
+
     </div>
 
   </div>
@@ -314,137 +325,502 @@
 
 <script type="text/javascript">
 var currentView = "clock";
-var analogTapTimer = null;
 var analogLongPressTimer = null;
 var analogLongPressTriggered = false;
+var ignoreNextAppClick = false;
 var analogStyleIndex = 0;
+
+var tickData = [
+  { id: "tick1",  x: 161, y: 54,  rot: 30 },
+  { id: "tick2",  x: 184, y: 77,  rot: 60 },
+  { id: "tick4",  x: 184, y: 163, rot: 120 },
+  { id: "tick5",  x: 161, y: 186, rot: 150 },
+  { id: "tick7",  x: 79,  y: 186, rot: 210 },
+  { id: "tick8",  x: 56,  y: 163, rot: 240 },
+  { id: "tick10", x: 56,  y: 77,  rot: 300 },
+  { id: "tick11", x: 79,  y: 54,  rot: 330 }
+];
 
 var analogStyles = [
   {
     faceBg: "#f6f6f1",
     faceBorder: "#222222",
+    outerBorderWidth: 4,
     textColor: "#222222",
+    markFontSize: 24,
+    tickColor: "#222222",
+    tickWidth: 4,
+    tickLength: 16,
+    tickRadius: 0,
     dateBg: "#ffffff",
     dateBorder: "#222222",
+    dateBorderWidth: 2,
     dateColor: "#222222",
+    dateWidth: 32,
+    dateHeight: 24,
+    dateFontSize: 18,
     centerColor: "#222222",
+    centerSize: 6,
     hourColor: "#222222",
-    minuteColor: "#222222",
-    secondColor: "#cc2222",
     hourWidth: 4,
     hourLength: 50,
+    hourRadius: 0,
+    minuteColor: "#222222",
     minuteWidth: 3,
     minuteLength: 76,
+    minuteRadius: 0,
+    secondColor: "#cc2222",
     secondWidth: 2,
     secondLength: 90,
-    hourTop: 72,
-    minuteTop: 46,
-    secondTop: 32
+    secondRadius: 0
+  },
+  {
+    faceBg: "#111111",
+    faceBorder: "#d9d2b6",
+    outerBorderWidth: 5,
+    textColor: "#f2ead2",
+    markFontSize: 24,
+    tickColor: "#f2ead2",
+    tickWidth: 4,
+    tickLength: 20,
+    tickRadius: 0,
+    dateBg: "#f2ead2",
+    dateBorder: "#111111",
+    dateBorderWidth: 2,
+    dateColor: "#111111",
+    dateWidth: 34,
+    dateHeight: 24,
+    dateFontSize: 18,
+    centerColor: "#f2ead2",
+    centerSize: 7,
+    hourColor: "#f2ead2",
+    hourWidth: 7,
+    hourLength: 46,
+    hourRadius: 0,
+    minuteColor: "#f2ead2",
+    minuteWidth: 4,
+    minuteLength: 74,
+    minuteRadius: 0,
+    secondColor: "#ff6a00",
+    secondWidth: 2,
+    secondLength: 92,
+    secondRadius: 0
+  },
+  {
+    faceBg: "#0e1b2d",
+    faceBorder: "#7f98b5",
+    outerBorderWidth: 5,
+    textColor: "#dde8f5",
+    markFontSize: 23,
+    tickColor: "#dde8f5",
+    tickWidth: 3,
+    tickLength: 18,
+    tickRadius: 1,
+    dateBg: "#dde8f5",
+    dateBorder: "#0e1b2d",
+    dateBorderWidth: 2,
+    dateColor: "#0e1b2d",
+    dateWidth: 34,
+    dateHeight: 24,
+    dateFontSize: 18,
+    centerColor: "#dde8f5",
+    centerSize: 6,
+    hourColor: "#dde8f5",
+    hourWidth: 6,
+    hourLength: 48,
+    hourRadius: 0,
+    minuteColor: "#77b4ff",
+    minuteWidth: 4,
+    minuteLength: 80,
+    minuteRadius: 0,
+    secondColor: "#ff4d4d",
+    secondWidth: 2,
+    secondLength: 92,
+    secondRadius: 0
   },
   {
     faceBg: "#fff7d6",
-    faceBorder: "#111111",
-    textColor: "#111111",
+    faceBorder: "#3a2a1f",
+    outerBorderWidth: 4,
+    textColor: "#3a2a1f",
+    markFontSize: 24,
+    tickColor: "#3a2a1f",
+    tickWidth: 4,
+    tickLength: 15,
+    tickRadius: 2,
     dateBg: "#fffdf0",
-    dateBorder: "#111111",
-    dateColor: "#111111",
-    centerColor: "#111111",
-    hourColor: "#0f4c81",
-    minuteColor: "#0f4c81",
-    secondColor: "#d14b00",
-    hourWidth: 6,
-    hourLength: 46,
+    dateBorder: "#3a2a1f",
+    dateBorderWidth: 2,
+    dateColor: "#3a2a1f",
+    dateWidth: 34,
+    dateHeight: 24,
+    dateFontSize: 18,
+    centerColor: "#3a2a1f",
+    centerSize: 7,
+    hourColor: "#5c3820",
+    hourWidth: 7,
+    hourLength: 44,
+    hourRadius: 2,
+    minuteColor: "#5c3820",
     minuteWidth: 4,
     minuteLength: 72,
+    minuteRadius: 2,
+    secondColor: "#d14b00",
     secondWidth: 2,
-    secondLength: 86,
-    hourTop: 76,
-    minuteTop: 50,
-    secondTop: 36
-  },
-  {
-    faceBg: "#eef3f8",
-    faceBorder: "#333333",
-    textColor: "#333333",
-    dateBg: "#ffffff",
-    dateBorder: "#333333",
-    dateColor: "#333333",
-    centerColor: "#333333",
-    hourColor: "#333333",
-    minuteColor: "#2a6f3b",
-    secondColor: "#aa2222",
-    hourWidth: 5,
-    hourLength: 48,
-    minuteWidth: 3,
-    minuteLength: 82,
-    secondWidth: 1,
-    secondLength: 92,
-    hourTop: 74,
-    minuteTop: 40,
-    secondTop: 30
+    secondLength: 88,
+    secondRadius: 1
   },
   {
     faceBg: "#f8efe9",
-    faceBorder: "#3a2a1f",
-    textColor: "#3a2a1f",
+    faceBorder: "#6b5440",
+    outerBorderWidth: 6,
+    textColor: "#5a4331",
+    markFontSize: 22,
+    tickColor: "#5a4331",
+    tickWidth: 5,
+    tickLength: 14,
+    tickRadius: 3,
     dateBg: "#fff8f1",
-    dateBorder: "#3a2a1f",
-    dateColor: "#3a2a1f",
-    centerColor: "#3a2a1f",
-    hourColor: "#3a2a1f",
-    minuteColor: "#3a2a1f",
+    dateBorder: "#6b5440",
+    dateBorderWidth: 2,
+    dateColor: "#5a4331",
+    dateWidth: 30,
+    dateHeight: 22,
+    dateFontSize: 17,
+    centerColor: "#5a4331",
+    centerSize: 7,
+    hourColor: "#5a4331",
+    hourWidth: 8,
+    hourLength: 42,
+    hourRadius: 3,
+    minuteColor: "#9b5f2c",
+    minuteWidth: 4,
+    minuteLength: 68,
+    minuteRadius: 2,
     secondColor: "#1c7c7c",
-    hourWidth: 6,
+    secondWidth: 2,
+    secondLength: 86,
+    secondRadius: 1
+  },
+  {
+    faceBg: "#1b1b1b",
+    faceBorder: "#00ffcc",
+    outerBorderWidth: 5,
+    textColor: "#00ffcc",
+    markFontSize: 24,
+    tickColor: "#00ffcc",
+    tickWidth: 4,
+    tickLength: 18,
+    tickRadius: 0,
+    dateBg: "#001a14",
+    dateBorder: "#00ffcc",
+    dateBorderWidth: 2,
+    dateColor: "#00ffcc",
+    dateWidth: 34,
+    dateHeight: 24,
+    dateFontSize: 18,
+    centerColor: "#00ffcc",
+    centerSize: 7,
+    hourColor: "#ff00aa",
+    hourWidth: 7,
     hourLength: 44,
+    hourRadius: 0,
+    minuteColor: "#ffee00",
+    minuteWidth: 4,
+    minuteLength: 74,
+    minuteRadius: 0,
+    secondColor: "#ffffff",
+    secondWidth: 2,
+    secondLength: 92,
+    secondRadius: 0
+  },
+  {
+    faceBg: "#0a0a0a",
+    faceBorder: "#ff33cc",
+    outerBorderWidth: 5,
+    textColor: "#ffee44",
+    markFontSize: 23,
+    tickColor: "#ffaa00",
+    tickWidth: 5,
+    tickLength: 16,
+    tickRadius: 1,
+    dateBg: "#1a0014",
+    dateBorder: "#ff33cc",
+    dateBorderWidth: 2,
+    dateColor: "#ffee44",
+    dateWidth: 36,
+    dateHeight: 24,
+    dateFontSize: 18,
+    centerColor: "#ff33cc",
+    centerSize: 8,
+    hourColor: "#00e0ff",
+    hourWidth: 8,
+    hourLength: 42,
+    hourRadius: 1,
+    minuteColor: "#ff33cc",
     minuteWidth: 4,
     minuteLength: 70,
+    minuteRadius: 1,
+    secondColor: "#ffffff",
     secondWidth: 2,
-    secondLength: 88,
-    hourTop: 78,
-    minuteTop: 52,
-    secondTop: 34
+    secondLength: 90,
+    secondRadius: 0
   },
   {
     faceBg: "#f2f2f2",
     faceBorder: "#000000",
+    outerBorderWidth: 6,
     textColor: "#000000",
+    markFontSize: 25,
+    tickColor: "#000000",
+    tickWidth: 5,
+    tickLength: 18,
+    tickRadius: 0,
     dateBg: "#ffffff",
     dateBorder: "#000000",
+    dateBorderWidth: 2,
     dateColor: "#000000",
+    dateWidth: 32,
+    dateHeight: 24,
+    dateFontSize: 18,
     centerColor: "#000000",
+    centerSize: 8,
     hourColor: "#000000",
+    hourWidth: 8,
+    hourLength: 40,
+    hourRadius: 0,
     minuteColor: "#444444",
-    secondColor: "#ff0000",
-    hourWidth: 7,
-    hourLength: 42,
     minuteWidth: 3,
     minuteLength: 78,
+    minuteRadius: 0,
+    secondColor: "#ff0000",
     secondWidth: 2,
     secondLength: 94,
-    hourTop: 80,
-    minuteTop: 44,
-    secondTop: 28
+    secondRadius: 0
   },
   {
     faceBg: "#e8f7ea",
     faceBorder: "#204020",
+    outerBorderWidth: 4,
     textColor: "#204020",
+    markFontSize: 22,
+    tickColor: "#204020",
+    tickWidth: 4,
+    tickLength: 16,
+    tickRadius: 2,
     dateBg: "#f8fff9",
     dateBorder: "#204020",
+    dateBorderWidth: 2,
     dateColor: "#204020",
+    dateWidth: 32,
+    dateHeight: 24,
+    dateFontSize: 18,
     centerColor: "#204020",
+    centerSize: 7,
     hourColor: "#204020",
-    minuteColor: "#0f5f8a",
-    secondColor: "#cc3366",
-    hourWidth: 5,
+    hourWidth: 6,
     hourLength: 52,
+    hourRadius: 2,
+    minuteColor: "#0f5f8a",
     minuteWidth: 4,
     minuteLength: 74,
+    minuteRadius: 2,
+    secondColor: "#cc3366",
     secondWidth: 2,
     secondLength: 90,
-    hourTop: 70,
-    minuteTop: 48,
-    secondTop: 32
+    secondRadius: 1
+  },
+  {
+    faceBg: "#101820",
+    faceBorder: "#d6b36a",
+    outerBorderWidth: 5,
+    textColor: "#f0d890",
+    markFontSize: 24,
+    tickColor: "#f0d890",
+    tickWidth: 4,
+    tickLength: 18,
+    tickRadius: 1,
+    dateBg: "#f7eed2",
+    dateBorder: "#8a6b2f",
+    dateBorderWidth: 2,
+    dateColor: "#4f3e19",
+    dateWidth: 36,
+    dateHeight: 24,
+    dateFontSize: 18,
+    centerColor: "#d6b36a",
+    centerSize: 7,
+    hourColor: "#d6b36a",
+    hourWidth: 6,
+    hourLength: 46,
+    hourRadius: 1,
+    minuteColor: "#d6b36a",
+    minuteWidth: 4,
+    minuteLength: 76,
+    minuteRadius: 1,
+    secondColor: "#ff5e5e",
+    secondWidth: 2,
+    secondLength: 92,
+    secondRadius: 0
+  },
+  {
+    faceBg: "#f4f0ff",
+    faceBorder: "#5a3ea6",
+    outerBorderWidth: 4,
+    textColor: "#5a3ea6",
+    markFontSize: 23,
+    tickColor: "#5a3ea6",
+    tickWidth: 4,
+    tickLength: 15,
+    tickRadius: 2,
+    dateBg: "#ffffff",
+    dateBorder: "#5a3ea6",
+    dateBorderWidth: 2,
+    dateColor: "#5a3ea6",
+    dateWidth: 32,
+    dateHeight: 24,
+    dateFontSize: 18,
+    centerColor: "#5a3ea6",
+    centerSize: 7,
+    hourColor: "#5a3ea6",
+    hourWidth: 7,
+    hourLength: 44,
+    hourRadius: 3,
+    minuteColor: "#a02cff",
+    minuteWidth: 4,
+    minuteLength: 72,
+    minuteRadius: 2,
+    secondColor: "#ff9f1c",
+    secondWidth: 2,
+    secondLength: 88,
+    secondRadius: 1
+  },
+  {
+    faceBg: "#eaf4ff",
+    faceBorder: "#244c73",
+    outerBorderWidth: 4,
+    textColor: "#244c73",
+    markFontSize: 24,
+    tickColor: "#244c73",
+    tickWidth: 3,
+    tickLength: 16,
+    tickRadius: 2,
+    dateBg: "#ffffff",
+    dateBorder: "#244c73",
+    dateBorderWidth: 2,
+    dateColor: "#244c73",
+    dateWidth: 34,
+    dateHeight: 24,
+    dateFontSize: 18,
+    centerColor: "#244c73",
+    centerSize: 6,
+    hourColor: "#244c73",
+    hourWidth: 5,
+    hourLength: 48,
+    hourRadius: 2,
+    minuteColor: "#3e7cb1",
+    minuteWidth: 3,
+    minuteLength: 80,
+    minuteRadius: 2,
+    secondColor: "#e63946",
+    secondWidth: 2,
+    secondLength: 92,
+    secondRadius: 1
+  },
+  {
+    faceBg: "#fff0f0",
+    faceBorder: "#8f1d1d",
+    outerBorderWidth: 5,
+    textColor: "#8f1d1d",
+    markFontSize: 23,
+    tickColor: "#8f1d1d",
+    tickWidth: 5,
+    tickLength: 16,
+    tickRadius: 0,
+    dateBg: "#ffffff",
+    dateBorder: "#8f1d1d",
+    dateBorderWidth: 2,
+    dateColor: "#8f1d1d",
+    dateWidth: 32,
+    dateHeight: 24,
+    dateFontSize: 18,
+    centerColor: "#8f1d1d",
+    centerSize: 7,
+    hourColor: "#8f1d1d",
+    hourWidth: 8,
+    hourLength: 42,
+    hourRadius: 0,
+    minuteColor: "#cc5c5c",
+    minuteWidth: 4,
+    minuteLength: 70,
+    minuteRadius: 0,
+    secondColor: "#222222",
+    secondWidth: 2,
+    secondLength: 88,
+    secondRadius: 0
+  },
+  {
+    faceBg: "#0d0f16",
+    faceBorder: "#7cfb4b",
+    outerBorderWidth: 5,
+    textColor: "#d7ffd0",
+    markFontSize: 23,
+    tickColor: "#7cfb4b",
+    tickWidth: 4,
+    tickLength: 20,
+    tickRadius: 0,
+    dateBg: "#16210f",
+    dateBorder: "#7cfb4b",
+    dateBorderWidth: 2,
+    dateColor: "#d7ffd0",
+    dateWidth: 36,
+    dateHeight: 24,
+    dateFontSize: 18,
+    centerColor: "#7cfb4b",
+    centerSize: 8,
+    hourColor: "#d7ffd0",
+    hourWidth: 7,
+    hourLength: 44,
+    hourRadius: 0,
+    minuteColor: "#7cfb4b",
+    minuteWidth: 4,
+    minuteLength: 72,
+    minuteRadius: 0,
+    secondColor: "#ff3b3b",
+    secondWidth: 2,
+    secondLength: 94,
+    secondRadius: 0
+  },
+  {
+    faceBg: "#fff8e6",
+    faceBorder: "#333333",
+    outerBorderWidth: 4,
+    textColor: "#222222",
+    markFontSize: 24,
+    tickColor: "#555555",
+    tickWidth: 3,
+    tickLength: 14,
+    tickRadius: 3,
+    dateBg: "#ffffff",
+    dateBorder: "#333333",
+    dateBorderWidth: 2,
+    dateColor: "#222222",
+    dateWidth: 30,
+    dateHeight: 22,
+    dateFontSize: 17,
+    centerColor: "#222222",
+    centerSize: 6,
+    hourColor: "#222222",
+    hourWidth: 5,
+    hourLength: 50,
+    hourRadius: 3,
+    minuteColor: "#444444",
+    minuteWidth: 3,
+    minuteLength: 82,
+    minuteRadius: 3,
+    secondColor: "#c93b3b",
+    secondWidth: 1,
+    secondLength: 94,
+    secondRadius: 0
   }
 ];
 
@@ -470,7 +846,7 @@ function getWeekdayIndex(d) {
   return wd - 1;
 }
 
-function rotateElement(el, deg) {
+function rotateHandElement(el, deg) {
   if (!el) {
     return;
   }
@@ -478,6 +854,23 @@ function rotateElement(el, deg) {
   el.style.transform = "rotate(" + deg + "deg)";
   el.style.webkitTransformOrigin = "50% 100%";
   el.style.transformOrigin = "50% 100%";
+}
+
+function styleTick(id, x, y, width, height, color, rotation, radius) {
+  var e = document.getElementById(id);
+  if (!e) {
+    return;
+  }
+  e.style.left = (x - Math.floor(width / 2)) + "px";
+  e.style.top = (y - Math.floor(height / 2)) + "px";
+  e.style.width = width + "px";
+  e.style.height = height + "px";
+  e.style.background = color;
+  e.style.borderRadius = radius + "px";
+  e.style.webkitTransform = "rotate(" + rotation + "deg)";
+  e.style.transform = "rotate(" + rotation + "deg)";
+  e.style.webkitTransformOrigin = "50% 50%";
+  e.style.transformOrigin = "50% 50%";
 }
 
 function applyAnalogStyle(index) {
@@ -491,40 +884,67 @@ function applyAnalogStyle(index) {
   var hourHand = document.getElementById("hourHand");
   var minuteHand = document.getElementById("minuteHand");
   var secondHand = document.getElementById("secondHand");
+  var i;
+  var t;
 
   outer.style.background = s.faceBg;
   outer.style.borderColor = s.faceBorder;
+  outer.style.borderWidth = s.outerBorderWidth + "px";
 
   m12.style.color = s.textColor;
   m9.style.color = s.textColor;
   m6.style.color = s.textColor;
+  m12.style.fontSize = s.markFontSize + "px";
+  m9.style.fontSize = s.markFontSize + "px";
+  m6.style.fontSize = s.markFontSize + "px";
+  m12.style.lineHeight = (s.markFontSize + 4) + "px";
+  m9.style.lineHeight = (s.markFontSize + 4) + "px";
+  m6.style.lineHeight = (s.markFontSize + 4) + "px";
 
   dateBox.style.background = s.dateBg;
   dateBox.style.borderColor = s.dateBorder;
+  dateBox.style.borderWidth = s.dateBorderWidth + "px";
   dateBox.style.color = s.dateColor;
+  dateBox.style.width = s.dateWidth + "px";
+  dateBox.style.height = s.dateHeight + "px";
+  dateBox.style.left = "182px";
+  dateBox.style.top = (120 - Math.floor(s.dateHeight / 2)) + "px";
+  dateBox.style.marginTop = "0";
+  dateBox.style.fontSize = s.dateFontSize + "px";
+  dateBox.style.lineHeight = s.dateHeight + "px";
 
   center.style.background = s.centerColor;
+  center.style.width = s.centerSize + "px";
+  center.style.height = s.centerSize + "px";
+  center.style.left = (120 - Math.floor(s.centerSize / 2)) + "px";
+  center.style.top = (120 - Math.floor(s.centerSize / 2)) + "px";
+  center.style.borderRadius = Math.floor(s.centerSize / 2) + "px";
 
   hourHand.style.background = s.hourColor;
   hourHand.style.width = s.hourWidth + "px";
   hourHand.style.height = s.hourLength + "px";
   hourHand.style.left = (120 - Math.floor(s.hourWidth / 2)) + "px";
-  hourHand.style.top = s.hourTop + "px";
-  hourHand.style.marginLeft = "0";
+  hourHand.style.top = (120 - s.hourLength) + "px";
+  hourHand.style.borderRadius = s.hourRadius + "px";
 
   minuteHand.style.background = s.minuteColor;
   minuteHand.style.width = s.minuteWidth + "px";
   minuteHand.style.height = s.minuteLength + "px";
   minuteHand.style.left = (120 - Math.floor(s.minuteWidth / 2)) + "px";
-  minuteHand.style.top = s.minuteTop + "px";
-  minuteHand.style.marginLeft = "0";
+  minuteHand.style.top = (120 - s.minuteLength) + "px";
+  minuteHand.style.borderRadius = s.minuteRadius + "px";
 
   secondHand.style.background = s.secondColor;
   secondHand.style.width = s.secondWidth + "px";
   secondHand.style.height = s.secondLength + "px";
   secondHand.style.left = (120 - Math.floor(s.secondWidth / 2)) + "px";
-  secondHand.style.top = s.secondTop + "px";
-  secondHand.style.marginLeft = "0";
+  secondHand.style.top = (120 - s.secondLength) + "px";
+  secondHand.style.borderRadius = s.secondRadius + "px";
+
+  for (i = 0; i < tickData.length; i = i + 1) {
+    t = tickData[i];
+    styleTick(t.id, t.x, t.y, s.tickWidth, s.tickLength, s.tickColor, t.rot, s.tickRadius);
+  }
 }
 
 function randomizeAnalogStyle() {
@@ -548,9 +968,9 @@ function updateAnalog() {
   var secondDeg = s * 6;
 
   document.getElementById("analogDateBox").innerHTML = day;
-  rotateElement(document.getElementById("hourHand"), hourDeg);
-  rotateElement(document.getElementById("minuteHand"), minuteDeg);
-  rotateElement(document.getElementById("secondHand"), secondDeg);
+  rotateHandElement(document.getElementById("hourHand"), hourDeg);
+  rotateHandElement(document.getElementById("minuteHand"), minuteDeg);
+  rotateHandElement(document.getElementById("secondHand"), secondDeg);
 }
 
 function updateClock() {
@@ -733,6 +1153,7 @@ function startAnalogLongPress() {
 
   analogLongPressTimer = setTimeout(function () {
     analogLongPressTriggered = true;
+    ignoreNextAppClick = true;
     goToStartClock();
     analogLongPressTimer = null;
   }, 700);
@@ -746,6 +1167,12 @@ function cancelAnalogLongPress() {
 }
 
 function handleAppTap() {
+  if (ignoreNextAppClick) {
+    ignoreNextAppClick = false;
+    analogLongPressTriggered = false;
+    return;
+  }
+
   if (currentView == "clock") {
     currentView = "calendar";
     renderViews();
